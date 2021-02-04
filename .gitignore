@@ -1,0 +1,22 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+*~
+/.vscode
+__pycache__/
+/static
+media
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+### macOS ###
+.DS_Store
+
+# Python
+app/venv
