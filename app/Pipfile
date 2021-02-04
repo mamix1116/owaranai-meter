@@ -7,7 +7,11 @@ verify_ssl = true
 
 [packages]
 django = "*"
+gunicorn = "*"
 psycopg2-binary = "*"
+djangorestframework = "*"
+django-filter = "*"
+pillow = "*"
 
 [requires]
 python_version = "3.8"
