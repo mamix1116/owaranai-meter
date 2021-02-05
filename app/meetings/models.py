@@ -13,10 +13,10 @@ class Meeting(models.Model):
 
     # テーブルのカラムに対応するフィールドを定義
     meeting_id = models.UUIDField(verbose_name='会議ID', primary_key=True, default=uuid.uuid4, editable=False)
-    num_men = models.IntegerField(verbose_name='男性の人数')
-    num_women = models.IntegerField(verbose_name='女性の人数')
-    duration_men = models.TimeField(verbose_name='男性の継続時間', null=True, blank=True)
-    duration_women = models.TimeField(verbose_name='女性の継続時間', null=True, blank=True)
+    num_men = models.IntegerField(verbose_name='男性の人数', null=True)
+    num_women = models.IntegerField(verbose_name='女性の人数', null=True)
+    duration_men = models.IntegerField(verbose_name='男性の継続時間', null=True, blank=True)
+    duration_women = models.Field(verbose_name='女性の継続時間', null=True, blank=True)
     meeting_status = models.CharField(verbose_name='会議ステータス', max_length=25, blank=True)
 
     def __str__(self):
