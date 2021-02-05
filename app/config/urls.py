@@ -21,7 +21,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('meetings/', include(meetings.urls)),
+    # path('meetings/', include(meetings.urls)),
 ]
 
 if bool(settings.DEBUG):

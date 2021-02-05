@@ -4,7 +4,7 @@ import datetime
 from django.db import models
 
 
-class Meeting(models.Midel):
+class Meeting(models.Model):
     """会議モデル"""
     class Meta:
         # テーブル名を定義
