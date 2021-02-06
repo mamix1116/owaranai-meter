@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'meetings.apps.MeetingsConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
