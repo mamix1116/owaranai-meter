@@ -27,7 +27,6 @@
             #{ minutes('men') | zeroPad } :
             #{ seconds('men') | zeroPad }
           </p>
-          <div>#{ duration('men') }</div>
           <b-avatar v-if="!isRunning.men" button size="72px" @click="startTimer('men')" :disabled="!inMeeting || isRunning.men"></b-avatar>
           <b-avatar v-else button size="72px" @click="stopTimer('men')" :disabled="!inMeeting || !isRunning.men"></b-avatar>
         </b-col>
@@ -45,7 +44,6 @@
             #{ minutes('women') | zeroPad } :
             #{ seconds('women') | zeroPad }
           </p>
-          <div>#{ duration('women') }</div>
           <b-avatar v-if="!isRunning.women" button size="72px" @click="startTimer('women')" :disabled="!inMeeting || isRunning.women"></b-avatar>
           <b-avatar v-else button size="72px" @click="stopTimer('women')" :disabled="!inMeeting || !isRunning.women"></b-avatar>
         </b-col>
@@ -53,6 +51,7 @@
       <b-button v-if="!inMeeting" block variant="primary" @click="inMeeting = true">会議START</b-button>
       <b-button v-else block variant="secondary" @click="submitSave">会議STOP</b-button>
       <b-button block variant="secondary" @click="clearAll">CANCEL</b-button>
+      <b-button v-if="isDone" block variant="outline-primary" @click="showModal = true">結果を見る</b-button>
     </b-container>
     <b-modal v-model="showModal" centered @shown="drawChart" @ok="downloadImage">
       <div id="result">
@@ -136,6 +135,7 @@
         women: false
       },
       inMeeting: false,
+      isDone: false,
       showModal: false
     },
     computed: {
@@ -189,6 +189,7 @@
       },
       clearAll() {
         this.inMeeting = false;
+        this.isDone = false;
         this.meetingName = '';
         this.number.men = 0;
         this.number.women = 0;
@@ -219,6 +220,7 @@
         .then((res) => {
           store.dispatch('setData', res.data);
           this.showModal = true;
+          this.isDone = true;
         })
         .catch((e) => {
           console.error(e);
