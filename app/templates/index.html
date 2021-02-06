@@ -54,10 +54,12 @@
       <b-button v-else block variant="secondary" @click="submitSave">会議STOP</b-button>
       <b-button block variant="secondary" @click="clearAll">CANCEL</b-button>
     </b-container>
-    <b-modal v-model="showModal" centered @shown="drawChart">
-      <svg ref="chart" id="chart" width="300" height="300">
-        <g ref="inner" id="inner"></g>
-      </svg>
+    <b-modal v-model="showModal" centered @shown="drawChart" @ok="downloadImage">
+      <div id="result">
+        <svg id="chart" width="300" height="300">
+          <g id="inner"></g>
+        </svg>
+      </div>
     </b-modal>
   </main>
 </div>
@@ -269,6 +271,22 @@
           .attr("dy", "5px")
           .attr("text-anchor", "middle")
           .text(function(d) { return d.data.label; });
+      },
+      downloadImage(){
+        html2canvas(document.querySelector("#result")).then(function(canvas){
+          canvas.toBlob(function(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            document.body.appendChild(a);
+            a.download = 'owaranai-meter.png';
+            a.href = url;
+            a.click();
+            a.remove();
+            setTimeout(() => {
+              URL.revokeObjectURL(url);
+            }, 1E4);
+          }, 'image/png');
+        });
       }
     }
   })
