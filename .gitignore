@@ -20,3 +20,5 @@ pip-delete-this-directory.txt
 
 # Python
 app/venv
+
+.idea
