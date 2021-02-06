@@ -22,7 +22,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('meetings/', include(meetings.urls)),
-    path('api/', include('meetings.api.urls')),
+    path('api/<version>/', include('meetings.api.urls')),
 ]
 
 if bool(settings.DEBUG):

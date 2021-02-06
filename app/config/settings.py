@@ -133,3 +133,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # set upload files directory and url path
 MEDIA_URL = "/mediafiles/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
+
+REST_FRAMEWORK = {
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+}
