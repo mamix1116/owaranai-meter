@@ -25,6 +25,7 @@ urlpatterns = [
     # path('meetings/', include(meetings.urls)),
     path('api/<version>/', include('meetings.api.urls')),
     path('', TemplateView.as_view(template_name='index.html')),
+    path('try_meter/', TemplateView.as_view(template_name='try_meter.html')),
 ]
 
 if bool(settings.DEBUG):
