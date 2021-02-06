@@ -5,22 +5,22 @@
   <main class="main-container">
     <b-container>
       <b-row>
-        <v-col>
+        <b-col>
           <b-form-input v-model="meetingName"></b-form-input>
-        </v-col>
-        <v-col>
+        </b-col>
+        <b-col>
           の会議
-        </v-col>
+        </b-col>
       </b-row>
       <b-row class="mb-4">
         <b-col>
           <b-row>
-            <v-col>
+            <b-col>
               <b-form-input v-model.number="number.men" min="0" type="number"></b-form-input>
-            </v-col>
-            <v-col>
+            </b-col>
+            <b-col>
               人
-            </v-col>
+            </b-col>
           </b-row>
           <p>
             #{ hours('men') } :
@@ -33,12 +33,12 @@
         </b-col>
         <b-col>
           <b-row>
-            <v-col>
+            <b-col>
               <b-form-input v-model.number="number.women" min="0" type="number"></b-form-input>
-            </v-col>
-            <v-col>
+            </b-col>
+            <b-col>
               人
-            </v-col>
+            </b-col>
           </b-row>
           <p>
             #{ hours('women') } :
@@ -56,6 +56,15 @@
     </b-container>
     <b-modal v-model="showModal" centered @shown="drawChart" @ok="downloadImage">
       <div id="result">
+        <h2>#{ $store.state.meetingData.meeting_name === '' ? 'あなた' : $store.state.meetingData.meeting_name }の会議</h2>
+        <b-row>
+          <b-col>
+            女性 #{ $store.state.meetingData.num_women }人
+          </b-col>
+          <b-col>
+            男性 #{ $store.state.meetingData.num_men }人
+          </b-col>
+        </b-row>
         <svg id="chart" width="300" height="300">
           <g id="inner"></g>
         </svg>
@@ -270,7 +279,7 @@
           .attr("transform", function(d) { return "translate(" + text.centroid(d) + ")"; })
           .attr("dy", "5px")
           .attr("text-anchor", "middle")
-          .text(function(d) { return d.data.label; });
+          .text(function(d) { return d.data.label + ':' + Math.floor(d.data.value / 60) % 60 + '分'; });
       },
       downloadImage(){
         html2canvas(document.querySelector("#result")).then(function(canvas){
