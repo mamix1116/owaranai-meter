@@ -55,7 +55,7 @@
     </b-container>
     <b-modal v-model="showModal" centered @shown="drawChart" @ok="downloadImage">
       <div id="result">
-        <h2>#{ $store.state.meetingData.meeting_name === '' ? 'あなた' : $store.state.meetingData.meeting_name }の会議</h2>
+        <h2>#{ meetingName === '' ? 'あなた' : meetingName }の会議</h2>
         <b-row>
           <b-col>
             女性 #{ $store.state.meetingData.num_women }人
@@ -209,7 +209,6 @@
           method: 'post',
           url: '/meetings/',
           data: {
-            'meeting_name': this.meetingName,
             'num_men': this.number.men,
             'num_women': this.number.women,
             'duration_men': this.duration('men'),
