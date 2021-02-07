@@ -1,57 +1,65 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>終わらないメーター</title>
-  <!-- CSS -->
-  <!-- BootstrapVue -->
-  <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
-  <style>
-    .main-container {
-      padding: 2em;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    [v-cloak] {
-      display: none;
-    }
-  </style>
-</head>
-<body>
-<div>
-  <div id="nav" v-cloak>
-    <b-navbar variant="faded" type="light">
-      <b-navbar-brand href="/">終わらないメーター</b-navbar-brand>
-    </b-navbar>
-  </div>
-  {% block content %}{% endblock %}
-</div>
-<!-- JS -->
-<!-- Load polyfills to support older browsers -->
-<script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
-<!-- Load Vue followed by BootstrapVue -->
-<script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
-<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
-<!-- Load the following for BootstrapVueIcons support -->
-<script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
-<!-- axios -->
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<!-- Vuex -->
-<script src="https://unpkg.com/vuex"></script>
-<!-- Promise -->
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
-<!-- D3.js -->
-<script src="https://d3js.org/d3.v6.min.js"></script>
-<script src="{% static 'js/html2canvas.min.js' %}"></script>
-<script>
-  const nav = new Vue({
-    el: '#nav'
-  });
-</script>
-{% block extra_js %}{% endblock %}
-</body>
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0">
+      <title>発言が終わらないメーター</title>
+      <!-- OGP -->
+
+      <!-- CSS -->
+      <!-- Font Awesome -->
+      <link rel="stylesheet" href="{% static 'css/all.css' %}">
+      <!-- BootstrapVue -->
+      <link rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+      <link rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+      <style>
+        .main-container {
+          padding: 2em;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        [v-cloak] {
+          display: none;
+        }
+      </style>
+    </head>
+    <body>
+        <div>
+          <div id="nav" v-cloak>
+            <b-navbar variant="faded" type="light">
+              <b-navbar-brand href="/">発言が終わらないメーター</b-navbar-brand>
+            </b-navbar>
+          </div>
+          {% block content %}{% endblock %}
+        </div>
+        <!-- Footer -->
+        {% include 'partials/_footer.html' %}
+
+
+        <!-- JS -->
+        <!-- Load polyfills to support older browsers -->
+        <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CIntersectionObserver" crossorigin="anonymous"></script>
+        <!-- Load Vue followed by BootstrapVue -->
+        <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
+        <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+        <!-- Load the following for BootstrapVueIcons support -->
+        <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue-icons.min.js"></script>
+        <!-- axios -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <!-- Vuex -->
+        <script src="https://unpkg.com/vuex"></script>
+        <!-- Promise -->
+        <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.js"></script>
+        <!-- D3.js -->
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src="{% static 'js/html2canvas.min.js' %}"></script>
+        <script>
+          const nav = new Vue({
+            el: '#nav'
+          });
+        </script>
+        {% block extra_js %}{% endblock %}
+    </body>
 </html>
