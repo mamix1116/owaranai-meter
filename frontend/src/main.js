@@ -1,6 +1,7 @@
 import Vue from "vue";
 import BootstrapVue from "bootstrap-vue";
-import "./custom.scss";
+import "@/assets/global.scss";
+import "@/assets/custom.scss";
 
 import App from "./App.vue";
 import router from "./router";

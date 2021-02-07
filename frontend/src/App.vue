@@ -1,18 +1,13 @@
 <template>
-  <div id="app">
+  <div id="app" class="main-container">
     <router-view />
   </div>
 </template>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  color: #2c3e50;
-}
-main.container {
-  border: 1px solid #cccccc;
-  margin-top: 4em;
+.main-container {
   padding: 2em;
-  width: 600px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 </style>
