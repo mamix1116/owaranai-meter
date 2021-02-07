@@ -22,3 +22,10 @@ pip-delete-this-directory.txt
 app/venv
 
 .idea
+
+# frontend
+app/staticfiles/css/app.*
+app/staticfiles/img/
+app/staticfiles/js/app.*
+app/staticfiles/js/chunk-vendors.*
+
