@@ -5,10 +5,12 @@
   <main class="main-container">
     <p>#{ totalMeetingNum }会議</p>
     <p>#{ totalParticipants }人</p>
-    <svg id="barChart"></svg>
-    <svg id="chart" width="300" height="300">
-      <g id="inner"></g>
-    </svg>
+    <div v-if="totalMeetingNum !== 0">
+      <svg id="barChart"></svg>
+      <svg id="chart" width="300" height="300">
+        <g id="inner"></g>
+      </svg>
+    </div>
     <b-button href="/try_meter/" block variant="primary">計測する</b-button>
   </main>
 </div>
