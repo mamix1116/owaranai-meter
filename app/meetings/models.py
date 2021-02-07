@@ -14,7 +14,6 @@ class Meeting(models.Model):
 
     # テーブルのカラムに対応するフィールドを定義
     meeting_id = models.AutoField(verbose_name='会議ID', primary_key=True)
-    meeting_name = models.CharField(verbose_name='会議名', max_length=200, blank=True)
     num_men = models.IntegerField(verbose_name='男性の人数', null=True)
     num_women = models.IntegerField(verbose_name='女性の人数', null=True)
     duration_men = models.IntegerField(verbose_name='男性の継続時間', null=True, blank=True)
