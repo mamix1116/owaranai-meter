@@ -74,7 +74,7 @@ export default {
         g = d3.select("#inner").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
       const color = d3.scaleOrdinal()
-        .range(["#A4243B", "#D8C99B", "#D8973C", "#BD632F", "#273E47"]);
+        .range(["#04c4b4", "#ff8355"]);
 
       // Generate the pie
       const pie = d3.pie()
@@ -136,7 +136,7 @@ export default {
       const halfBarHeight = barHeight / 2
 
       const color = d3.scaleOrdinal()
-        .range(["#A4243B", "#D8C99B", "#D8973C", "#BD632F", "#273E47"]);
+        .range(["#04c4b4", "#ff8355"]);
 
       const total = d3.sum(data, d => d.num)
 
