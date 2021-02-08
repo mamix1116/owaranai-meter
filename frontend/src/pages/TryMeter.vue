@@ -3,7 +3,11 @@
     <b-container>
       <h1 class="text-center">
         <router-link to="/">
-          <img src="@/assets/images/meter_logo-middle.png" width="550" alt="発言が終わらないメーター" />
+          <img
+            src="@/assets/images/meter_logo-middle.png"
+            width="550"
+            alt="発言が終わらないメーター"
+          />
         </router-link>
       </h1>
       <b-row align-v="center" align-h="center" class="my-4">
@@ -33,14 +37,15 @@
             v-if="!isRunning.men"
             button
             size="72px"
+            src="@/assets/images/avatar_silent.png"
             @click="startTimer('men')"
             :disabled="!inMeeting || isRunning.men"
           ></b-avatar>
           <b-avatar
             v-else
             button
-            variant="success"
             size="72px"
+            src="@/assets/images/avatar_men.png"
             @click="stopTimer('men')"
             :disabled="!inMeeting || !isRunning.men"
           ></b-avatar>
@@ -67,14 +72,15 @@
             v-if="!isRunning.women"
             button
             size="72px"
+            src="@/assets/images/avatar_silent.png"
             @click="startTimer('women')"
             :disabled="!inMeeting || isRunning.women"
           ></b-avatar>
           <b-avatar
             v-else
             button
-            variant="primary"
             size="72px"
+            src="@/assets/images/avatar_women.png"
             @click="stopTimer('women')"
             :disabled="!inMeeting || !isRunning.women"
           ></b-avatar>
@@ -99,7 +105,9 @@
           </b-button>
         </b-col>
         <b-col cols="10" md="6">
-          <b-button block variant="secondary" class="mb-4" @click="clearAll">リセット</b-button>
+          <b-button block variant="secondary" class="mb-4" @click="clearAll"
+            >リセット</b-button
+          >
         </b-col>
         <b-col cols="10" md="6">
           <b-button
@@ -113,20 +121,26 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-modal
-      v-model="showModal"
-      centered
-      @shown="drawChart"
-    >
+    <b-modal v-model="showModal" centered @shown="drawChart">
       <div id="result">
         <div class="px-4 py-4">
           <div>
-            <img src="@/assets/images/meter_logo-horizontal.png" width="300" alt="発言が終わらないメーター" />
+            <img
+              src="@/assets/images/meter_logo-horizontal.png"
+              width="300"
+              alt="発言が終わらないメーター"
+            />
           </div>
-          <h2 class="my-4">{{ meetingName === "" ? "あなた" : meetingName }}の会議</h2>
+          <h2 class="my-4">
+            {{ meetingName === "" ? "あなた" : meetingName }}の会議
+          </h2>
           <b-row class="justify-content-around my-4">
-            <b-col class="text-center"> 女性 {{ $store.state.meetingData.num_women }}人 </b-col>
-            <b-col class="text-center"> 男性 {{ $store.state.meetingData.num_men }}人 </b-col>
+            <b-col class="text-center">
+              女性 {{ $store.state.meetingData.num_women }}人
+            </b-col>
+            <b-col class="text-center">
+              男性 {{ $store.state.meetingData.num_men }}人
+            </b-col>
           </b-row>
           <b-row class="justify-content-center">
             <svg id="chart" width="300" height="300">
