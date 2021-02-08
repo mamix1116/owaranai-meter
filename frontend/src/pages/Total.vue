@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <b-row align-h="center">
-        <b-col cols="6">
+        <b-col cols="12" md="8">
           <h1>
             <img
               src="@/assets/images/meter_logo-large.png"
