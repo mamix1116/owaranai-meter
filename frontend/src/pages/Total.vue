@@ -127,8 +127,8 @@ export default {
     },
     drawChart() {
       const data = [
-        { label: "男性", value: this.sumDurationMen },
-        { label: "女性", value: this.sumDurationWomen }
+        { label: "女性", value: this.sumDurationWomen },
+        { label: "男性", value: this.sumDurationMen }
       ];
 
       const svg = d3.select("#chart"),
@@ -139,7 +139,7 @@ export default {
           .select("#inner")
           .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-      const color = d3.scaleOrdinal().range(["#04c4b4", "#ff8355"]);
+      const color = d3.scaleOrdinal().range(["#ff8355", "#04c4b4"]);
 
       // Generate the pie
       const pie = d3

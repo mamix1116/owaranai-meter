@@ -136,10 +136,10 @@
           </h2>
           <b-row class="justify-content-around my-4" style="font-size: 24px">
             <b-col class="text-center">
-              女性 {{ $store.state.meetingData.num_women }}人
+              男性 {{ $store.state.meetingData.num_men }}人
             </b-col>
             <b-col class="text-center">
-              男性 {{ $store.state.meetingData.num_men }}人
+              女性 {{ $store.state.meetingData.num_women }}人
             </b-col>
           </b-row>
           <b-row class="justify-content-center my-4">
@@ -291,8 +291,8 @@ export default {
     },
     drawChart() {
       const data = [
-        { label: "男性", value: this.$store.state.meetingData.duration_men },
-        { label: "女性", value: this.$store.state.meetingData.duration_women }
+        { label: "女性", value: this.$store.state.meetingData.duration_women },
+        { label: "男性", value: this.$store.state.meetingData.duration_men }
       ];
 
       const svg = d3.select("#chart"),
@@ -303,7 +303,7 @@ export default {
           .select("#inner")
           .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-      const color = d3.scaleOrdinal().range(["#04c4b4", "#ff8355"]);
+      const color = d3.scaleOrdinal().range(["#ff8355", "#04c4b4"]);
 
       // Generate the pie
       const pie = d3
