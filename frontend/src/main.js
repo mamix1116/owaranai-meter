@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
+import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import "@/assets/global.scss";
 import "@/assets/custom.scss";
 
