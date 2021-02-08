@@ -18,7 +18,7 @@ export default {
 <style>
 .main-container {
   padding: 2em;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
 }
 </style>
