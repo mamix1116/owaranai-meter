@@ -1,5 +1,5 @@
 import Vue from "vue";
-import BootstrapVue from "bootstrap-vue";
+import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 import "@/assets/global.scss";
 import "@/assets/custom.scss";
 
@@ -10,6 +10,7 @@ import store from "./store";
 Vue.config.productionTip = process.env.NODE_ENV === "production";
 
 Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 
 new Vue({
   router,

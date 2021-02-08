@@ -1,82 +1,79 @@
 <template>
-    <div class="py-5 text-center">
+  <div class="py-5 text-center">
+    <!-- Title -->
+    <b-container class="text-center">
+      <b-row>
+        <b-col cols="3"></b-col>
+        <b-col cols="6">
+          <img src="@/assets/images/meter_logo-large.png" />
+          <!-- <h1>発言が終わらないメーター</h1> -->
+        </b-col>
+        <b-col cols="3"></b-col>
+      </b-row>
+    </b-container>
 
-      <!-- Title -->
-      <b-container id="header" class="text-center">
-        <b-row>
-          <b-col cols="3"></b-col>
-          <b-col cols="6">
-            <img src="@/assets/images/meter_logo-large.svg" />
-            <!-- <h1>発言が終わらないメーター</h1> -->
-          </b-col>
-          <b-col cols="3"></b-col>
-        </b-row>
-      </b-container>
+    <!-- Description -->
+    <b-container>
+      <p class="lead">“女性が多い会議”は本当に“時間がかかる”のか？</p>
+      <p>会議中の発言時間を計測・可視化します。</p>
+    </b-container>
 
-      <!-- Description -->
-      <b-container id="Description" >
-        <p class="lead">“女性が多い会議”は本当に“時間がかかる”のか？</p>
-        <p>会議中の発言時間を計測・可視化します。</p>
-      </b-container>
+    <!-- Summary -->
+    <b-container>
+      <b-row>
+        <b-col cols="12">
+          <p>みんなの会議の集計結果</p>
+        </b-col>
+        <b-col cols="6">
+          <div v-if="totalMeetingNum !== 0">
+            <svg id="chart" width="300" height="300">
+              <g id="inner"></g>
+            </svg>
+          </div>
+        </b-col>
+        <b-col cols="6">
+          <h4>これまでの集計</h4>
+          <p>{{ totalMeetingNum }}会議</p>
+          <h4>参加人数</h4>
+          <p>{{ totalParticipants }}人</p>
+          <h4>参加者の構成</h4>
+          <div v-if="totalMeetingNum !== 0">
+            <svg id="barChart"></svg>
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
+    <hr />
 
+    <!-- Go to Meter -->
+    <b-container id="meter" class="">
+      <b-row>
+        <b-col cols="12">
+          <h3>会議中の発言時間を計測・可視化します。</h3>
+          <p>
+            男性・女性それぞれのスタート、ストップを押して、会議中の発言時間を計測してください。
+          </p>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col cols="3"></b-col>
+        <b-col cols="6">
+          <p>
+            統計情報の収集のため、計測結果をサーバに送信します。（会議名は送信されません）。計測ボタンを押すと同意したことになります。
+          </p>
+          <b-button href="/try_meter" block variant="primary"
+            >計測する</b-button
+          >
+        </b-col>
+        <b-col cols="3"></b-col>
+      </b-row>
+    </b-container>
+    <hr />
 
+    <!-- Project Description -->
 
-      <!-- Summary -->
-      <b-container id="Description" >
-        <b-row>
-          <b-col cols="12">
-            <p>みんなの会議の集計結果</p>
-          </b-col>
-          <b-col cols="6">
-            <div v-if="totalMeetingNum !== 0">
-              <svg id="chart" width="300" height="300">
-                <g id="inner"></g>
-              </svg>
-            </div>
-          </b-col>
-          <b-col cols="6">
-            <h4>これまでの集計</h4>
-            <p>{{ totalMeetingNum }}会議</p>
-            <h4>参加人数</h4>
-            <p>{{ totalParticipants }}人</p>
-            <h4>参加者の構成</h4>
-            <div v-if="totalMeetingNum !== 0">
-              <svg id="barChart"></svg>
-            </div>
-          </b-col>
-        </b-row>
-      </b-container>
-      <hr />
-
-      <!-- Go to Meter -->
-      <b-container id="meter" class="">
-        <b-row>
-          <b-col cols="12">
-            <h3>会議中の発言時間を計測・可視化します。</h3>
-            <p>男性・女性それぞれのスタート、ストップを押して、会議中の発言時間を計測してください。</p>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col cols="3"></b-col>
-          <b-col cols="6">
-            <p>統計情報の収集のため、計測結果をサーバに送信します。（会議名は送信されません）。計測ボタンを押すと同意したことになります。</p>
-            <b-button href="/try_meter" block variant="primary">計測する</b-button>
-          </b-col>
-          <b-col cols="3"></b-col>
-        </b-row>
-
-      </b-container>
-      <hr />
-
-      <!-- Project Description -->
-
-
-      <!-- Footer -->
-
-
-
-    </div>
-
+    <!-- Footer -->
+  </div>
 </template>
 
 <script>
@@ -130,8 +127,8 @@ export default {
     },
     drawChart() {
       const data = [
-        { label: "men", value: this.sumDurationMen },
-        { label: "women", value: this.sumDurationWomen }
+        { label: "女性", value: this.sumDurationWomen },
+        { label: "男性", value: this.sumDurationMen }
       ];
 
       const svg = d3.select("#chart"),
@@ -142,7 +139,7 @@ export default {
           .select("#inner")
           .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-      const color = d3.scaleOrdinal().range(["#04c4b4", "#ff8355"]);
+      const color = d3.scaleOrdinal().range(["#ff8355", "#04c4b4"]);
 
       // Generate the pie
       const pie = d3
@@ -204,9 +201,9 @@ export default {
     },
     drawBarChart() {
       const data = [
-        { label: "men", num: this.sumNumberMen, startPos: 0 },
+        { label: "男性", num: this.sumNumberMen, startPos: 0 },
         {
-          label: "women",
+          label: "女性",
           num: this.sumNumberWomen,
           startPos: this.sumNumberMen
         }
