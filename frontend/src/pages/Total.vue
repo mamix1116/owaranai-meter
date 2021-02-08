@@ -1,63 +1,47 @@
 <template>
-  <div class="py-5 text-center">
-    <!-- Title -->
-    <b-container class="text-center">
-      <b-row>
-        <b-col cols="3"></b-col>
+  <div>
+    <b-container>
+      <b-row align-h="center">
         <b-col cols="6">
-          <img src="@/assets/images/meter_logo-large.png" />
-          <!-- <h1>発言が終わらないメーター</h1> -->
+          <h1>
+            <img
+              src="@/assets/images/meter_logo-large.png"
+              alt="発言が終わらないメーター"
+            />
+          </h1>
         </b-col>
-        <b-col cols="3"></b-col>
       </b-row>
-    </b-container>
-
-    <!-- Description -->
-    <b-container>
-      <p class="lead">“女性が多い会議”は本当に“時間がかかる”のか？</p>
-      <p>会議中の発言時間を計測・可視化します。</p>
-    </b-container>
-
-    <!-- Summary -->
-    <b-container>
+      <div class="text-center my-4">
+        <p class="lead">“女性が多い会議”は本当に“時間がかかる”のか？</p>
+        <p>会議中の発言時間を計測・可視化します。</p>
+      </div>
+      <h2 class="my-4">みんなの会議の集計結果</h2>
       <b-row>
-        <b-col cols="12">
-          <p>みんなの会議の集計結果</p>
-        </b-col>
-        <b-col cols="6">
-          <div v-if="totalMeetingNum !== 0">
+        <b-col cols="12" md="6" class="my-4">
+          <div v-if="totalMeetingNum !== 0" class="text-center">
             <svg id="chart" width="300" height="300">
               <g id="inner"></g>
             </svg>
           </div>
         </b-col>
-        <b-col cols="6">
-          <h4>これまでの集計</h4>
-          <p>{{ totalMeetingNum }}会議</p>
-          <h4>参加人数</h4>
-          <p>{{ totalParticipants }}人</p>
-          <h4>参加者の構成</h4>
-          <div v-if="totalMeetingNum !== 0">
+        <b-col cols="12" md="6" class="my-4">
+          <h3>これまでの集計</h3>
+          <p class="totalNumberText">{{ totalMeetingNum }}会議</p>
+          <h3>参加人数</h3>
+          <p class="totalNumberText">{{ totalParticipants }}人</p>
+          <h3>参加者の構成</h3>
+          <div v-if="totalMeetingNum !== 0" class="text-center">
             <svg id="barChart"></svg>
           </div>
         </b-col>
       </b-row>
-    </b-container>
-    <hr />
-
-    <!-- Go to Meter -->
-    <b-container id="meter" class="">
-      <b-row>
-        <b-col cols="12">
-          <h3>会議中の発言時間を計測・可視化します。</h3>
-          <p>
-            男性・女性それぞれのスタート、ストップを押して、会議中の発言時間を計測してください。
-          </p>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col cols="3"></b-col>
-        <b-col cols="6">
+      <hr />
+      <h2 class="text-center">会議中の発言時間を計測・可視化します。</h2>
+      <p>
+        男性・女性それぞれのスタート、ストップを押して、会議中の発言時間を計測してください。
+      </p>
+      <b-row align-h="center">
+        <b-col cols="12" md="6">
           <p>
             統計情報の収集のため、計測結果をサーバに送信します。（会議名は送信されません）。計測ボタンを押すと同意したことになります。
           </p>
@@ -65,14 +49,8 @@
             >計測する</b-button
           >
         </b-col>
-        <b-col cols="3"></b-col>
       </b-row>
     </b-container>
-    <hr />
-
-    <!-- Project Description -->
-
-    <!-- Footer -->
   </div>
 </template>
 
@@ -169,6 +147,8 @@ export default {
         .attr("fill", function(d, i) {
           return color(i);
         })
+        .style("stroke", "#fff")
+        .style("stroke-width", 5)
         .transition()
         .delay(function(d, i) {
           return i * 800;
@@ -196,7 +176,9 @@ export default {
         .attr("dy", "5px")
         .attr("text-anchor", "middle")
         .text(function(d) {
-          return d.data.label;
+          return (
+            d.data.label + ":" + (Math.floor(d.data.value / 60) % 60) + "分"
+          );
         });
     },
     drawBarChart() {
@@ -211,9 +193,9 @@ export default {
 
       const config = {
         margin: { top: 20, right: 0, bottom: 20, left: 0 },
-        width: 300,
-        height: 100,
-        barHeight: 50
+        width: 350,
+        height: 150,
+        barHeight: 75
       };
       const { margin, width, height, barHeight } = config;
       const w = width - margin.left - margin.right;
@@ -250,7 +232,9 @@ export default {
         .attr("width", d => xScale(d.num))
         .attr("fill", function(d, i) {
           return color(i);
-        });
+        })
+        .style("stroke", "#fff")
+        .style("stroke-width", 5);
 
       // add values on bar
       selection
@@ -282,3 +266,13 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+h3 {
+  font-size: 16px;
+}
+.totalNumberText {
+  font-size: 22px;
+  text-align: right;
+}
+</style>

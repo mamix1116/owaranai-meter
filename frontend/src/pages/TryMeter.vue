@@ -20,7 +20,7 @@
       </b-row>
       <b-row class="justify-content-md-center mb-4">
         <b-col cols="6" md="4" class="text-center">
-          <div>男性</div>
+          <div class="font-weight-bold">男性</div>
           <b-row align-v="center" align-h="center" class="mb-4">
             <b-col cols="6">
               <b-form-input
@@ -55,7 +55,7 @@
           </div>
         </b-col>
         <b-col cols="6" md="4" class="text-center">
-          <div>女性</div>
+          <div class="font-weight-bold">女性</div>
           <b-row align-v="center" align-h="center" class="mb-4">
             <b-col cols="6">
               <b-form-input
@@ -333,6 +333,8 @@ export default {
         .attr("fill", function(d, i) {
           return color(i);
         })
+        .style("stroke", "#fff")
+        .style("stroke-width", 5)
         .transition()
         .delay(function(d, i) {
           return i * 800;
