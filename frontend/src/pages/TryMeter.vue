@@ -105,9 +105,9 @@
           </b-button>
         </b-col>
         <b-col cols="10" md="6">
-          <b-button block variant="secondary" class="mb-4" @click="clearAll"
-            >リセット</b-button
-          >
+          <b-button block variant="secondary" class="mb-4" @click="clearAll">
+            リセット
+          </b-button>
         </b-col>
         <b-col cols="10" md="6">
           <b-button
@@ -124,17 +124,17 @@
     <b-modal v-model="showModal" centered @shown="drawChart">
       <div id="result">
         <div class="px-4 py-4">
-          <div>
+          <div class="text-center">
             <img
               src="@/assets/images/meter_logo-horizontal.png"
-              width="300"
+              width="400"
               alt="発言が終わらないメーター"
             />
           </div>
           <h2 class="my-4">
             {{ meetingName === "" ? "あなた" : meetingName }}の会議
           </h2>
-          <b-row class="justify-content-around my-4">
+          <b-row class="justify-content-around my-4" style="font-size: 24px">
             <b-col class="text-center">
               女性 {{ $store.state.meetingData.num_women }}人
             </b-col>
@@ -142,11 +142,12 @@
               男性 {{ $store.state.meetingData.num_men }}人
             </b-col>
           </b-row>
-          <b-row class="justify-content-center">
+          <b-row class="justify-content-center my-4">
             <svg id="chart" width="300" height="300">
               <g id="inner"></g>
             </svg>
           </b-row>
+          <div class="text-center" style="font-size: 24px">#owaranai</div>
         </div>
       </div>
       <template #modal-footer="{ cancel }">
