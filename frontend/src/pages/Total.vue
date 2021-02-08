@@ -2,11 +2,11 @@
     <div class="py-5 text-center">
 
       <!-- Title -->
-      <b-container id="header" class="text-center">
+      <b-container class="text-center">
         <b-row>
           <b-col cols="3"></b-col>
           <b-col cols="6">
-            <img src="@/assets/images/meter_logo-large.svg" />
+            <img src="@/assets/images/meter_logo-large.png" />
             <!-- <h1>発言が終わらないメーター</h1> -->
           </b-col>
           <b-col cols="3"></b-col>
@@ -14,7 +14,7 @@
       </b-container>
 
       <!-- Description -->
-      <b-container id="Description" >
+      <b-container>
         <p class="lead">“女性が多い会議”は本当に“時間がかかる”のか？</p>
         <p>会議中の発言時間を計測・可視化します。</p>
       </b-container>
@@ -22,7 +22,7 @@
 
 
       <!-- Summary -->
-      <b-container id="Description" >
+      <b-container>
         <b-row>
           <b-col cols="12">
             <p>みんなの会議の集計結果</p>
@@ -130,8 +130,8 @@ export default {
     },
     drawChart() {
       const data = [
-        { label: "men", value: this.sumDurationMen },
-        { label: "women", value: this.sumDurationWomen }
+        { label: "男性", value: this.sumDurationMen },
+        { label: "女性", value: this.sumDurationWomen }
       ];
 
       const svg = d3.select("#chart"),
@@ -204,9 +204,9 @@ export default {
     },
     drawBarChart() {
       const data = [
-        { label: "men", num: this.sumNumberMen, startPos: 0 },
+        { label: "男性", num: this.sumNumberMen, startPos: 0 },
         {
-          label: "women",
+          label: "女性",
           num: this.sumNumberWomen,
           startPos: this.sumNumberMen
         }
