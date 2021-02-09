@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  nginx:
+    build: ./frontend
+    ports:
+      - "9090:80"
+    environment:
+      VUE_APP_ROOT_API: 'http://127.0.0.1:8000/api/v1/'

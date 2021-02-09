@@ -27,3 +27,4 @@ app/venv
 nginx/staticfiles/
 var/db/
 var/lib/ssl_certs/
+.env

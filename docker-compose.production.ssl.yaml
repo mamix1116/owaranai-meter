@@ -1,6 +1,23 @@
 version: "3.7"
 
 services:
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - nginx
+    #links:
+    #  - nginx
+    # Restart https-portal on failure or after Docker host restart.
+    restart: always
+    environment:
+      DOMAINS: 'owaranai.omata.org -> http://nginx:80'
+      STAGE: 'production'
+      #STAGE: 'local'
+    volumes:
+      - ./var/lib/ssl_certs:/var/lib/https-portal
   app:
     build:
       context: ./app
@@ -11,10 +28,8 @@ services:
       - ./app:/usr/src/app
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
-    #expose:
-    # - 8000
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     env_file:
       - ./.env.production
     depends_on:
@@ -27,17 +42,15 @@ services:
       - ./.env.production
   nginx:
     build:
-      context: ./frontend
+      context: ./nginx
       dockerfile: Dockerfile.production
-    #expose:
-    #  - 80
-    ports:
-      - "1337:80"
     volumes:
       - media_volume:/usr/src/app/mediafiles
+    expose:
+      - 80
+    #ports:
+    #  - 1337:80
     depends_on:
-      - app
-    links:
       - app
 
 volumes:
