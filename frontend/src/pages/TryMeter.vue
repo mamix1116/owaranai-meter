@@ -1,36 +1,43 @@
 <template>
   <div>
     <b-container>
-      <b-row>
-        <b-col>
+      <h1 class="text-center">
+        <router-link to="/">
+          <img
+            src="@/assets/images/meter_logo-middle.png"
+            width="550"
+            alt="発言が終わらないメーター"
+          />
+        </router-link>
+      </h1>
+      <b-row align-v="center" align-h="center" class="my-4">
+        <b-col cols="8" md="5">
           <b-form-input v-model="meetingName"></b-form-input>
         </b-col>
-        <b-col>
+        <span>
           の会議
-        </b-col>
+        </span>
       </b-row>
-      <b-row class="mb-4">
-        <b-col>
-          <b-row>
-            <b-col>
+      <b-row class="justify-content-md-center mb-4">
+        <b-col cols="6" md="4" class="text-center">
+          <div class="font-weight-bold">男性</div>
+          <b-row align-v="center" align-h="center" class="mb-4">
+            <b-col cols="6">
               <b-form-input
                 v-model.number="number.men"
                 min="0"
                 type="number"
               ></b-form-input>
             </b-col>
-            <b-col>
+            <span>
               人
-            </b-col>
+            </span>
           </b-row>
-          <p>
-            {{ hours("men") }} : {{ minutes("men") | zeroPad }} :
-            {{ seconds("men") | zeroPad }}
-          </p>
           <b-avatar
             v-if="!isRunning.men"
             button
             size="72px"
+            src="@/assets/images/avatar_silent.png"
             @click="startTimer('men')"
             :disabled="!inMeeting || isRunning.men"
           ></b-avatar>
@@ -38,31 +45,34 @@
             v-else
             button
             size="72px"
+            src="@/assets/images/avatar_men.png"
             @click="stopTimer('men')"
             :disabled="!inMeeting || !isRunning.men"
           ></b-avatar>
+          <div class="mt-4">
+            {{ hours("men") }} : {{ minutes("men") | zeroPad }} :
+            {{ seconds("men") | zeroPad }}
+          </div>
         </b-col>
-        <b-col>
-          <b-row>
-            <b-col>
+        <b-col cols="6" md="4" class="text-center">
+          <div class="font-weight-bold">女性</div>
+          <b-row align-v="center" align-h="center" class="mb-4">
+            <b-col cols="6">
               <b-form-input
                 v-model.number="number.women"
                 min="0"
                 type="number"
               ></b-form-input>
             </b-col>
-            <b-col>
+            <span>
               人
-            </b-col>
+            </span>
           </b-row>
-          <p>
-            {{ hours("women") }} : {{ minutes("women") | zeroPad }} :
-            {{ seconds("women") | zeroPad }}
-          </p>
           <b-avatar
             v-if="!isRunning.women"
             button
             size="72px"
+            src="@/assets/images/avatar_silent.png"
             @click="startTimer('women')"
             :disabled="!inMeeting || isRunning.women"
           ></b-avatar>
@@ -70,46 +80,84 @@
             v-else
             button
             size="72px"
+            src="@/assets/images/avatar_women.png"
             @click="stopTimer('women')"
             :disabled="!inMeeting || !isRunning.women"
           ></b-avatar>
+          <div class="mt-4">
+            {{ hours("women") }} : {{ minutes("women") | zeroPad }} :
+            {{ seconds("women") | zeroPad }}
+          </div>
         </b-col>
       </b-row>
-      <b-button
-        v-if="!inMeeting"
-        block
-        variant="primary"
-        @click="inMeeting = true"
-        >会議START</b-button
-      >
-      <b-button v-else block variant="secondary" @click="submitSave"
-        >会議STOP</b-button
-      >
-      <b-button block variant="secondary" @click="clearAll">CANCEL</b-button>
-      <b-button
-        v-if="isDone"
-        block
-        variant="outline-primary"
-        @click="showModal = true"
-        >結果を見る</b-button
-      >
+      <b-row align-v="center" class="flex-column">
+        <b-col cols="10" md="6" class="mb-4">
+          <b-button
+            v-if="!inMeeting"
+            block
+            variant="primary"
+            @click="inMeeting = true"
+          >
+            会議開始
+          </b-button>
+          <b-button v-else block variant="info" @click="submitSave">
+            会議終了
+          </b-button>
+        </b-col>
+        <b-col cols="10" md="6">
+          <b-button block variant="secondary" class="mb-4" @click="clearAll">
+            リセット
+          </b-button>
+        </b-col>
+        <b-col cols="10" md="6">
+          <b-button
+            v-if="isDone"
+            block
+            variant="outline-success"
+            @click="showModal = true"
+          >
+            もう一度結果を見る
+          </b-button>
+        </b-col>
+      </b-row>
     </b-container>
-    <b-modal
-      v-model="showModal"
-      centered
-      @shown="drawChart"
-      @ok="downloadImage"
-    >
+    <b-modal v-model="showModal" centered @shown="drawChart">
       <div id="result">
-        <h2>{{ meetingName === "" ? "あなた" : meetingName }}の会議</h2>
-        <b-row>
-          <b-col> 女性 {{ $store.state.meetingData.num_women }}人 </b-col>
-          <b-col> 男性 {{ $store.state.meetingData.num_men }}人 </b-col>
-        </b-row>
-        <svg id="chart" width="300" height="300">
-          <g id="inner"></g>
-        </svg>
+        <div class="px-4 py-4">
+          <div class="text-center">
+            <img
+              src="@/assets/images/meter_logo-horizontal.png"
+              width="400"
+              alt="発言が終わらないメーター"
+            />
+          </div>
+          <h2 class="my-4">
+            {{ meetingName === "" ? "あなた" : meetingName }}の会議
+          </h2>
+          <b-row class="justify-content-around my-4" style="font-size: 24px">
+            <b-col class="text-center">
+              男性 {{ $store.state.meetingData.num_men }}人
+            </b-col>
+            <b-col class="text-center">
+              女性 {{ $store.state.meetingData.num_women }}人
+            </b-col>
+          </b-row>
+          <b-row class="justify-content-center my-4">
+            <svg id="chart" width="300" height="300">
+              <g id="inner"></g>
+            </svg>
+          </b-row>
+          <div class="text-center" style="font-size: 24px">#owaranai</div>
+        </div>
       </div>
+      <template #modal-footer="{ cancel }">
+        <b-button variant="light" @click="cancel()">
+          CLOSE
+        </b-button>
+        <b-button variant="success" @click="downloadImage">
+          <b-icon icon="download" aria-hidden="true"></b-icon> 画像をDL
+        </b-button>
+      </template>
     </b-modal>
   </div>
 </template>
@@ -234,6 +282,7 @@ export default {
         .then(res => {
           this.$store.dispatch("setData", res.data);
           this.showModal = true;
+          this.inMeeting = false;
           this.isDone = true;
         })
         .catch(e => {
@@ -242,8 +291,8 @@ export default {
     },
     drawChart() {
       const data = [
-        { label: "men", value: this.$store.state.meetingData.duration_men },
-        { label: "women", value: this.$store.state.meetingData.duration_women }
+        { label: "女性", value: this.$store.state.meetingData.duration_women },
+        { label: "男性", value: this.$store.state.meetingData.duration_men }
       ];
 
       const svg = d3.select("#chart"),
@@ -254,7 +303,7 @@ export default {
           .select("#inner")
           .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-      const color = d3.scaleOrdinal().range(["#04c4b4", "#ff8355"]);
+      const color = d3.scaleOrdinal().range(["#ff8355", "#04c4b4"]);
 
       // Generate the pie
       const pie = d3
@@ -284,6 +333,8 @@ export default {
         .attr("fill", function(d, i) {
           return color(i);
         })
+        .style("stroke", "#fff")
+        .style("stroke-width", 5)
         .transition()
         .delay(function(d, i) {
           return i * 800;
@@ -317,20 +368,24 @@ export default {
         });
     },
     downloadImage() {
-      html2canvas(document.querySelector("#result")).then(function(canvas) {
-        canvas.toBlob(function(blob) {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          document.body.appendChild(a);
-          a.download = "owaranai-meter.png";
-          a.href = url;
-          a.click();
-          a.remove();
-          setTimeout(() => {
-            URL.revokeObjectURL(url);
-          }, 1e4);
-        }, "image/png");
-      });
+      html2canvas(document.querySelector("#result"))
+        .then(function(canvas) {
+          canvas.toBlob(function(blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            document.body.appendChild(a);
+            a.download = "owaranai-meter.png";
+            a.href = url;
+            a.click();
+            a.remove();
+            setTimeout(() => {
+              URL.revokeObjectURL(url);
+            }, 1e4);
+          }, "image/png");
+        })
+        .then(() => {
+          this.showModal = false;
+        });
     }
   }
 };
