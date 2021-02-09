@@ -29,3 +29,5 @@ app/staticfiles/img/
 app/staticfiles/js/app.*
 app/staticfiles/js/chunk-vendors.*
 
+# production
+var/lib/ssl_certs/
