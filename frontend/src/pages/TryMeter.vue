@@ -19,7 +19,7 @@
         </span>
       </b-row>
       <b-row class="justify-content-md-center mb-4">
-        <b-col cols="6" md="4" class="text-center">
+        <b-col cols="6" md="3" class="text-center">
           <div class="font-weight-bold">男性</div>
           <b-row align-v="center" align-h="center" class="mb-4">
             <b-col cols="6">
@@ -36,7 +36,7 @@
           <b-avatar
             v-if="!isRunning.men"
             button
-            size="72px"
+            size="84px"
             src="@/assets/images/avatar_silent.png"
             @click="startTimer('men')"
             :disabled="!inMeeting || isRunning.men"
@@ -44,7 +44,7 @@
           <b-avatar
             v-else
             button
-            size="72px"
+            size="84px"
             src="@/assets/images/avatar_men.png"
             @click="stopTimer('men')"
             :disabled="!inMeeting || !isRunning.men"
@@ -54,7 +54,7 @@
             {{ seconds("men") | zeroPad }}
           </div>
         </b-col>
-        <b-col cols="6" md="4" class="text-center">
+        <b-col cols="6" md="3" class="text-center">
           <div class="font-weight-bold">女性</div>
           <b-row align-v="center" align-h="center" class="mb-4">
             <b-col cols="6">
@@ -71,7 +71,7 @@
           <b-avatar
             v-if="!isRunning.women"
             button
-            size="72px"
+            size="84px"
             src="@/assets/images/avatar_silent.png"
             @click="startTimer('women')"
             :disabled="!inMeeting || isRunning.women"
@@ -79,7 +79,7 @@
           <b-avatar
             v-else
             button
-            size="72px"
+            size="84px"
             src="@/assets/images/avatar_women.png"
             @click="stopTimer('women')"
             :disabled="!inMeeting || !isRunning.women"
