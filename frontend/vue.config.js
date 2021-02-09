@@ -1,6 +1,12 @@
 module.exports = {
   devServer: {
-    proxy: 'http://127.0.0.1:8000'
+    proxy: {
+      '^/api/': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+        pathRewrite: { "^/api/": "/api/" }
+      }
+    }
   },
   chainWebpack: config => {
     const svgRule = config.module.rule("svg");
