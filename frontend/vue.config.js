@@ -1,4 +1,7 @@
 module.exports = {
+  devServer: {
+    proxy: 'http://127.0.0.1:8000'
+  },
   chainWebpack: config => {
     const svgRule = config.module.rule("svg");
     svgRule
