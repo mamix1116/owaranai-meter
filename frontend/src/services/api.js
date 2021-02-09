@@ -5,10 +5,7 @@ const api = axios.create({
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
-    "X-Requested-With": "XMLHttpRequest",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Origin, Content-Type, Accept"
+    "X-Requested-With": "XMLHttpRequest"
   }
 });
 
