@@ -9,9 +9,19 @@
               alt="発言が終わらないメーター"
             />
           </h1>
+          <div class="text-center">#owaranai</div>
+          <div class="text-center">
+            <a
+              href="https://twitter.com/share?url=https://owaranai.tokyo&hashtags=owaranai&text=発言が終わらないメーター"
+              rel="nofollow"
+              target="_blank"
+            >
+              <b-icon icon="twitter" aria-hidden="true"></b-icon> Tweet
+            </a>
+          </div>
         </b-col>
       </b-row>
-      <div class="text-center my-4">
+      <div class="text-center my-4 py-2">
         <p class="lead">“女性が多い会議”は本当に“時間がかかる”のか？</p>
         <p>会議中の発言時間を計測・可視化します。</p>
       </div>
@@ -25,31 +35,37 @@
           </div>
         </b-col>
         <b-col cols="12" md="6" class="my-4">
-          <h3>これまでの集計</h3>
-          <p class="totalNumberText">{{ totalMeetingNum }}会議</p>
-          <h3>参加人数</h3>
-          <p class="totalNumberText">{{ totalParticipants }}人</p>
-          <h3>参加者の構成</h3>
-          <div v-if="totalMeetingNum !== 0" class="text-center">
-            <svg id="barChart"></svg>
-          </div>
+          <dl>
+            <dt>これまでの集計</dt>
+            <dd class="totalNumberText">{{ totalMeetingNum }}会議</dd>
+            <dt>参加人数</dt>
+            <dd class="totalNumberText">{{ totalParticipants }}人</dd>
+            <dt>参加者の構成</dt>
+            <dd>
+              <div v-if="totalMeetingNum !== 0" class="text-center">
+                <svg id="barChart"></svg>
+              </div>
+            </dd>
+          </dl>
         </b-col>
       </b-row>
       <hr />
-      <h2 class="text-center">会議中の発言時間を計測・可視化します。</h2>
-      <p>
-        男性・女性それぞれのスタート、ストップを押して、会議中の発言時間を計測してください。
-      </p>
-      <b-row align-h="center">
-        <b-col cols="12" md="6">
-          <p>
-            統計情報の収集のため、計測結果をサーバに送信します。（会議名は送信されません）。計測ボタンを押すと同意したことになります。
-          </p>
-          <b-button href="/try_meter" block variant="primary"
-            >計測する</b-button
-          >
-        </b-col>
-      </b-row>
+      <div class="my-4">
+        <h2 class="text-center">会議中の発言時間を計測・可視化します。</h2>
+        <p>
+          男性・女性それぞれのスタート、ストップを押して、会議中の発言時間を計測してください。
+        </p>
+        <b-row align-h="center">
+          <b-col cols="12" md="6">
+            <p style="font-size: 14px">
+              統計情報の収集のため、計測結果をサーバに送信します。（会議名は送信されません）。計測ボタンを押すと同意したことになります。
+            </p>
+            <b-button href="/try_meter" block variant="primary">
+              計測する
+            </b-button>
+          </b-col>
+        </b-row>
+      </div>
     </b-container>
   </div>
 </template>
@@ -268,11 +284,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h3 {
-  font-size: 16px;
-}
 .totalNumberText {
-  font-size: 22px;
-  text-align: right;
+  font-size: 28px;
 }
 </style>
