@@ -60,9 +60,15 @@
             <p style="font-size: 14px">
               統計情報の収集のため、計測結果をサーバに送信します。（会議名は送信されません）。計測ボタンを押すと同意したことになります。
             </p>
-            <b-button href="/try_meter" block variant="primary">
+            <b-button href="/try_meter" pill block variant="primary" size="lg" class="buttonShadow">
               計測する
             </b-button>
+          </b-col>
+        </b-row>
+        <b-row align-h="center" class="my-4 py-4">
+          <b-col cols="12" md="8">
+            <span>使い方</span>
+            <img src="@/assets/images/torisetsu.png" alt="使い方" />
           </b-col>
         </b-row>
       </div>
@@ -286,5 +292,11 @@ export default {
 <style lang="scss" scoped>
 .totalNumberText {
   font-size: 28px;
+}
+.buttonShadow {
+  box-shadow: 0 3px 3px #aeaeae;
+  &:hover {
+    box-shadow: none;
+  }
 }
 </style>
