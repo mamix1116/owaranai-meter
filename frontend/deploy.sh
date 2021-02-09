@@ -1,8 +1,12 @@
 #!/bin/sh
 
 cp ./dist/index.html ../app/templates/
-cp ./dist/favicon.ico ../app/templates/
 
-cp -rf ./dist/css/ ../app/staticfiles/
-cp -rf ./dist/js/ ../app/staticfiles/
-cp -rf ./dist/img/  ../app/staticfiles/
+rm -rf ../nginx/staticfiles/
+mkdir -p ../nginx/staticfiles/
+
+rm -rf ../nginx/mediafiles/
+mkdir -p ../nginx/mediafiles/
+
+cp -rf ./dist/* ../nginx/staticfiles/
+cp -rf ../app/mediafiles/* ../nginx/mediafiles/

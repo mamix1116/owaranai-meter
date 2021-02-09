@@ -37,7 +37,7 @@ services:
   db:
     image: postgres:12.0-alpine
     volumes:
-      - db_data:/var/lib/postgresql/data/
+      - ./var/db/data:/var/lib/postgresql/data/
     env_file:
       - ./.env.production
   nginx:
@@ -45,10 +45,11 @@ services:
       context: ./nginx
       dockerfile: Dockerfile.production
     volumes:
-      - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
-    ports:
-      - 1337:80
+    expose:
+      - 80
+    #ports:
+    #  - 1337:80
     depends_on:
       - app
 
