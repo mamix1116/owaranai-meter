@@ -29,7 +29,7 @@
       <b-row>
         <b-col cols="12" md="6" class="my-4">
           <div v-if="totalMeetingNum !== 0" class="text-center">
-            <svg id="chart" width="270" height="270">
+            <svg id="chart" width="280" height="280">
               <g id="inner"></g>
             </svg>
           </div>
