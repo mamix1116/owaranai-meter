@@ -29,7 +29,7 @@
       <b-row>
         <b-col cols="12" md="6" class="my-4">
           <div v-if="totalMeetingNum !== 0" class="text-center">
-            <svg id="chart" width="300" height="300">
+            <svg id="chart" width="280" height="280">
               <g id="inner"></g>
             </svg>
           </div>
@@ -222,7 +222,7 @@ export default {
 
       const config = {
         margin: { top: 20, right: 0, bottom: 20, left: 0 },
-        width: 350,
+        width: 300,
         height: 150,
         barHeight: 75
       };

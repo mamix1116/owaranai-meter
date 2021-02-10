@@ -27,6 +27,7 @@
                 v-model.number="number.men"
                 min="0"
                 type="number"
+                pattern="\d*"
               ></b-form-input>
             </b-col>
             <span>
@@ -62,6 +63,7 @@
                 v-model.number="number.women"
                 min="0"
                 type="number"
+                pattern="\d*"
               ></b-form-input>
             </b-col>
             <span>
@@ -123,15 +125,15 @@
     </b-container>
     <b-modal v-model="showModal" centered @shown="drawChart">
       <div id="result">
-        <div class="px-4 py-4">
+        <div class="px-2 py-2">
           <div class="text-center">
             <img
               src="@/assets/images/meter_logo-horizontal.png"
-              width="400"
+              width="300"
               alt="発言が終わらないメーター"
             />
           </div>
-          <h2 class="my-4">
+          <h2 class="my-4" style="font-size: 28px">
             {{ meetingName === "" ? "あなた" : meetingName }}の会議
           </h2>
           <b-row class="justify-content-around my-4" style="font-size: 24px">
@@ -143,11 +145,11 @@
             </b-col>
           </b-row>
           <b-row class="justify-content-center my-4">
-            <svg id="chart" width="300" height="300">
+            <svg id="chart" width="220" height="220">
               <g id="inner"></g>
             </svg>
           </b-row>
-          <div class="text-center" style="font-size: 24px">#owaranai</div>
+          <div class="text-center" style="font-size: 20px">#owaranai</div>
         </div>
       </div>
       <template #modal-footer="{ cancel }">
