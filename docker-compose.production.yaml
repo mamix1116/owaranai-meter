@@ -12,12 +12,10 @@ services:
     links:
       - nginx
       - app
-    # Restart https-portal on failure or after Docker host restart.
     restart: always
     environment:
       DOMAINS: 'owaranai.tokyo -> http://nginx:80, owaranai-api.omata.org -> http://app:80'
       STAGE: 'production'
-      #STAGE: 'local'
     volumes:
       - ./var/lib/ssl_certs:/var/lib/https-portal
   app:
@@ -32,8 +30,6 @@ services:
       - media_volume:/usr/src/app/mediafiles
     expose:
       - 80
-    #ports:
-    #  - 80:80
     env_file:
       - ./.env.production
     depends_on:
@@ -50,8 +46,6 @@ services:
       dockerfile: Dockerfile.production
     expose:
       - 80
-    #ports:
-    #  - 80:80
     volumes:
       - media_volume:/usr/src/app/mediafiles
     depends_on:
