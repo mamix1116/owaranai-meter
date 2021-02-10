@@ -61,7 +61,7 @@
               統計情報の収集のため、計測結果をサーバに送信します。（会議名は送信されません）。計測ボタンを押すと同意したことになります。
             </p>
             <b-button
-              href="/try_meter"
+              to="/try_meter"
               pill
               block
               variant="primary"
