@@ -266,6 +266,7 @@ export default {
       cancelAnimationFrame(this.animateFrame[gender]);
     },
     clearAll() {
+      this.showAlert = false;
       this.inMeeting = false;
       this.isDone = false;
       this.meetingName = "";
