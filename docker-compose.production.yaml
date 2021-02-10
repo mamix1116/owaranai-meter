@@ -14,7 +14,7 @@ services:
       - app
     restart: always
     environment:
-      DOMAINS: 'owaranai.tokyo -> http://nginx:80, owaranai-api.omata.org -> http://app:80'
+      DOMAINS: 'owaranai.tokyo -> http://nginx:80, api.owaranai.tokyo -> http://app:80'
       STAGE: 'production'
     volumes:
       - ./var/lib/ssl_certs:/var/lib/https-portal
