@@ -149,6 +149,4 @@ CORS_ORIGIN_WHITELIST = (
     'https://owaranai.tokyo',
     'http://api.owaranai.tokyo',
     'https://api.owaranai.tokyo',
-    'http://owaranai-api.omata.org',
-    'https://owaranai-api.omata.org',
 )
