@@ -145,4 +145,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8080',
     'http://127.0.0.1:8080',
+    'http://owaranai.tokyo:1337',
+    'http://owaranai.tokyo',
+    'https://owaranai.tokyo',
 )
