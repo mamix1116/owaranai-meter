@@ -1,20 +1,39 @@
 version: "3.7"
 
 services:
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - nginx
+      - app
+    links:
+      - nginx
+      - app
+    # Restart https-portal on failure or after Docker host restart.
+    restart: always
+    environment:
+      DOMAINS: 'owaranai.tokyo -> http://nginx:80, owaranai-api.omata.org -> http://app:80'
+      STAGE: 'production'
+      #STAGE: 'local'
+    volumes:
+      - ./var/lib/ssl_certs:/var/lib/https-portal
   app:
     build:
       context: ./app
       dockerfile: Dockerfile.production
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:80
     working_dir: /usr/src/app/
     volumes:
       - ./app:/usr/src/app
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
     expose:
-     - 8000
+      - 80
     #ports:
-    #  - 8000:8000
+    #  - 80:80
     env_file:
       - ./.env.production
     depends_on:
@@ -29,10 +48,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.production
-    #expose:
-    # - 80
-    ports:
-      - "80:80"
+    expose:
+      - 80
+    #ports:
+    #  - 80:80
     volumes:
       - media_volume:/usr/src/app/mediafiles
     depends_on:
