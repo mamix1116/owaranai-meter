@@ -313,6 +313,7 @@ export default {
         }
       })
         .then(() => {
+          this.showModal = false;
           this.inMeeting = false;
           this.isDone = true;
         })
