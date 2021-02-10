@@ -26,7 +26,7 @@ MITライセンスです。
 ## docker-compose
 
 ```sh
-docker-compose -f docker-compose.development.yml
+docker-compose -f docker-compose.development.yml up -d
 docker-compose -f docker-compose.development.yml run app python manage.py flush --no-input
 docker-compose -f docker-compose.development.yml run app python manage.py migrate
 docker-compose -f docker-compose.development.yml run app python manage.py init_data
@@ -59,3 +59,29 @@ python app/manage.py runserver
 ```
 
 entry point: http://localhost:8000
+
+## 本番環境構築
+
+### docker-compose
+
+通常の場合：Dockerイメージをビルドして更新する
+```sh
+docker-compose -f docker-compose.production.yaml down
+docker-compose -f docker-compose.production.yaml build
+docker-compose -f docker-compose.production.yaml up -d 
+```
+
+キャッシュ無しでビルドする場合
+```sh
+docker-compose -f docker-compose.production.yaml build --no-cache
+```
+
+データベースの初期化
+```sh
+docker-compose -f docker-compose.production.yaml run app python manage.py flush --no-input
+```
+
+Djangoのモデルを更新した場合はデータベースを更新する
+```sh
+docker-compose -f docker-compose.production.yaml run app python manage.py migrate
+```
