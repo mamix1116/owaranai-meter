@@ -11,10 +11,10 @@ services:
       - ./app:/usr/src/app
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
-    #expose:
-    # - 8000
-    ports:
-      - 8000:8000
+    expose:
+     - 8000
+    #ports:
+    #  - 8000:8000
     env_file:
       - ./.env.production
     depends_on:
@@ -30,9 +30,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.production
     #expose:
-    #  - 80
+    # - 80
     ports:
-      - "1337:80"
+      - "80:80"
     volumes:
       - media_volume:/usr/src/app/mediafiles
     depends_on:
@@ -41,6 +41,5 @@ services:
       - app
 
 volumes:
-  db_data:
   static_volume:
   media_volume:
