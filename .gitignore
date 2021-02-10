@@ -22,3 +22,9 @@ pip-delete-this-directory.txt
 app/venv
 
 .idea
+
+# production
+nginx/staticfiles/
+var/db/
+var/lib/ssl_certs/
+.env
