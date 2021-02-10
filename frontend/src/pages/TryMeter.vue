@@ -26,6 +26,7 @@
               <b-form-input
                 v-model.number="number.men"
                 min="0"
+                max="500"
                 type="number"
                 pattern="\d*"
               ></b-form-input>
@@ -62,6 +63,7 @@
               <b-form-input
                 v-model.number="number.women"
                 min="0"
+                max="500"
                 type="number"
                 pattern="\d*"
               ></b-form-input>
@@ -93,6 +95,17 @@
         </b-col>
       </b-row>
       <b-row align-v="center" class="flex-column">
+        <b-col cols="10" md="6">
+          <b-alert
+            class="mb-4"
+            :show="showAlert"
+            dismissible
+            variant="danger"
+            @dismissed="dismissed"
+          >
+            人数の値が不正です。合計して1以上か、0〜500の数値を入力してください。
+          </b-alert>
+        </b-col>
         <b-col cols="10" md="6" class="mb-4">
           <b-button
             v-if="!inMeeting"
@@ -102,7 +115,7 @@
           >
             会議開始
           </b-button>
-          <b-button v-else block variant="info" @click="submitSave">
+          <b-button v-else block variant="info" @click="validateMeeting">
             会議終了
           </b-button>
         </b-col>
@@ -123,7 +136,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-modal v-model="showModal" centered @shown="drawChart">
+    <b-modal v-model="showModal" centered @shown="drawChart" @close="close">
       <div id="result">
         <div class="px-2 py-2">
           <div class="text-center">
@@ -137,12 +150,8 @@
             {{ meetingName === "" ? "あなた" : meetingName }}の会議
           </h2>
           <b-row class="justify-content-around my-4" style="font-size: 24px">
-            <b-col class="text-center">
-              男性 {{ $store.state.meetingData.num_men }}人
-            </b-col>
-            <b-col class="text-center">
-              女性 {{ $store.state.meetingData.num_women }}人
-            </b-col>
+            <b-col class="text-center"> 男性 {{ number.men }}人 </b-col>
+            <b-col class="text-center"> 女性 {{ number.women }}人 </b-col>
           </b-row>
           <b-row class="justify-content-center my-4">
             <svg id="chart" width="220" height="220">
@@ -152,12 +161,15 @@
           <div class="text-center" style="font-size: 20px">#owaranai</div>
         </div>
       </div>
-      <template #modal-footer="{ cancel }">
-        <b-button variant="light" @click="cancel()">
+      <template #modal-footer>
+        <b-button variant="light" @click="close">
           CLOSE
         </b-button>
         <b-button variant="success" @click="downloadImage">
           <b-icon icon="download" aria-hidden="true"></b-icon> 画像をDL
+        </b-button>
+        <b-button variant="info" @click="submitSave">
+          <b-icon icon="pie-chart" aria-hidden="true"></b-icon> 結果を送信する
         </b-button>
       </template>
     </b-modal>
@@ -200,7 +212,8 @@ export default {
       },
       inMeeting: false,
       isDone: false,
-      showModal: false
+      showModal: false,
+      showAlert: false
     };
   },
   computed: {
@@ -269,6 +282,24 @@ export default {
       this.animateFrame.men = 0;
       this.animateFrame.women = 0;
     },
+    validateMeeting() {
+      if (
+        this.number.men > 500 ||
+        this.number.men < 0 ||
+        this.number.women > 500 ||
+        this.number.women < 0 ||
+        (this.number.men === 0 && this.number.women === 0)
+      ) {
+        this.showAlert = true;
+      } else {
+        this.showModal = true;
+      }
+    },
+    dismissed() {
+      this.number.men = 0;
+      this.number.women = 0;
+      this.showAlert = false;
+    },
     submitSave() {
       api({
         method: "post",
@@ -281,9 +312,7 @@ export default {
           is_done: true
         }
       })
-        .then(res => {
-          this.$store.dispatch("setData", res.data);
-          this.showModal = true;
+        .then(() => {
           this.inMeeting = false;
           this.isDone = true;
         })
@@ -291,10 +320,15 @@ export default {
           console.error(e);
         });
     },
+    close() {
+      this.showModal = false;
+      this.inMeeting = false;
+      this.isDone = true;
+    },
     drawChart() {
       const data = [
-        { label: "女性", value: this.$store.state.meetingData.duration_women },
-        { label: "男性", value: this.$store.state.meetingData.duration_men }
+        { label: "女性", value: this.duration("women") },
+        { label: "男性", value: this.duration("men") }
       ];
 
       const svg = d3.select("#chart"),
@@ -370,24 +404,20 @@ export default {
         });
     },
     downloadImage() {
-      html2canvas(document.querySelector("#result"))
-        .then(function(canvas) {
-          canvas.toBlob(function(blob) {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            document.body.appendChild(a);
-            a.download = "owaranai-meter.png";
-            a.href = url;
-            a.click();
-            a.remove();
-            setTimeout(() => {
-              URL.revokeObjectURL(url);
-            }, 1e4);
-          }, "image/png");
-        })
-        .then(() => {
-          this.showModal = false;
-        });
+      html2canvas(document.querySelector("#result")).then(function(canvas) {
+        canvas.toBlob(function(blob) {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          document.body.appendChild(a);
+          a.download = "owaranai-meter.png";
+          a.href = url;
+          a.click();
+          a.remove();
+          setTimeout(() => {
+            URL.revokeObjectURL(url);
+          }, 1e4);
+        }, "image/png");
+      });
     }
   }
 };
