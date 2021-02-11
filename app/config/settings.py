@@ -29,8 +29,6 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 # ALLOWED_HOSTS = ['localhost']
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(" ")
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -140,13 +138,18 @@ REST_FRAMEWORK = {
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
 }
 
-# CORS
-CORS_ORIGIN_ALLOW_ALL = False
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:8080',
-    'http://127.0.0.1:8080',
-    'http://owaranai.tokyo',
-    'https://owaranai.tokyo',
-    'http://api.owaranai.tokyo',
-    'https://api.owaranai.tokyo',
-)
+# CORS 許可するオリジン
+if DEBUG:  # for DEBUG
+    CORS_ORIGIN_ALLOW_ALL = True
+    CORS_ORIGIN_WHITELIST = (
+        'http://localhost:1337',
+        'http://127.0.0.1:1337',
+        'http://localhost:8888',
+        'http://127.0.0.1:8888',
+    )
+else:
+    CORS_ORIGIN_ALLOW_ALL = False
+    CORS_ORIGIN_WHITELIST = (
+        'http://owaranai.tokyo',
+        'https://owaranai.tokyo',
+    )
