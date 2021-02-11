@@ -13,21 +13,32 @@ services:
       - media_volume:/usr/src/app/mediafiles
     expose:
       - 8000
+    ports:
+      - 8000:8000
     env_file:
       - ./.env.development
     depends_on:
       - db
-    networks:
-      - front
-      - back
+  nginx:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.development
+    expose:
+      - 80
+    ports:
+      - 1337:80
+    volumes:
+      - media_volume:/usr/src/app/mediafiles
+    depends_on:
+      - app
+    links:
+      - app
   db:
     image: postgres:12.0-alpine
     volumes:
-      - db_data:/var/lib/postgresql/data/
+      - ./var/db/data:/var/lib/postgresql/data/
     env_file:
       - ./.env.development
-    networks:
-      - back
   pgadmin4:
     image:  dpage/pgadmin4:latest
     volumes:
@@ -40,30 +51,8 @@ services:
       - db
     links:
       - db
-    networks:
-      - back
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile.development
-    volumes:
-      - static_volume:/usr/src/app/staticfiles
-      - media_volume:/usr/src/app/mediafiles
-    ports:
-      - 1337:80
-    depends_on:
-      - app
-    networks:
-      - front
 
 volumes:
-  db_data:
   pgadmin4:
   static_volume:
   media_volume:
-
-networks:
-  front:
-    external: false
-  back:
-    external: false
