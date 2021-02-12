@@ -189,7 +189,7 @@
       </template>
     </b-modal>
     <b-modal v-model="showCompletedModal" centered>
-      <h2>結果の送信が完了しました！</h2>
+      <h2 style="font-size: 22px">結果の送信が完了しました！</h2>
       <p>全体の集計結果に反映されました。</p>
       <template #modal-footer="{ cancel }">
         <b-button variant="light" @click="cancel()">
