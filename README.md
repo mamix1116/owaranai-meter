@@ -2,6 +2,8 @@
 
 “女性が多い会議”は本当に“時間がかかる”のか？
 
+[LT スライド 2021.02.13.](https://speakerdeck.com/mamix1116/owaranai)
+
 ## プロジェクトについて
 
 会議中の発言時間を計測・可視化します。
@@ -56,7 +58,7 @@ code .
 - prerequisites: python3 + venv
 
 ```sh
-docker-compose -f docker-compose.development.yml -f docker-compose.development.local.yml up -d --build 
+docker-compose -f docker-compose.development.yml -f docker-compose.development.local.yml up -d --build
 source app/venv/bin/activate
 set -a; source ./.env.development; source ./.env.development.local; set +a
 python app/manage.py runserver
@@ -80,7 +82,7 @@ entry point: http://localhost:8888/
 ```sh
 docker-compose -f docker-compose.production.yaml down
 docker-compose -f docker-compose.production.yaml build
-docker-compose -f docker-compose.production.yaml up -d 
+docker-compose -f docker-compose.production.yaml up -d
 ```
 
 キャッシュ無しでビルドする場合
