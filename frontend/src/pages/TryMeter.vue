@@ -41,7 +41,7 @@
             size="84px"
             src="@/assets/images/avatar_silent.png"
             @click="startTimer('men')"
-            :disabled="!inMeeting || isRunning.men"
+            :disabled="!inMeeting || isRunning.men || number.men === 0"
           ></b-avatar>
           <b-avatar
             v-else
@@ -49,7 +49,7 @@
             size="84px"
             src="@/assets/images/avatar_men.png"
             @click="stopTimer('men')"
-            :disabled="!inMeeting || !isRunning.men"
+            :disabled="!inMeeting || !isRunning.men || number.men === 0"
           ></b-avatar>
           <div class="mt-4">
             {{ hours("men") }} : {{ minutes("men") | zeroPad }} :
@@ -78,7 +78,7 @@
             size="84px"
             src="@/assets/images/avatar_silent.png"
             @click="startTimer('women')"
-            :disabled="!inMeeting || isRunning.women"
+            :disabled="!inMeeting || isRunning.women || number.women === 0"
           ></b-avatar>
           <b-avatar
             v-else
@@ -86,7 +86,7 @@
             size="84px"
             src="@/assets/images/avatar_women.png"
             @click="stopTimer('women')"
-            :disabled="!inMeeting || !isRunning.women"
+            :disabled="!inMeeting || !isRunning.women || number.women === 0"
           ></b-avatar>
           <div class="mt-4">
             {{ hours("women") }} : {{ minutes("women") | zeroPad }} :
@@ -168,8 +168,35 @@
         <b-button variant="success" @click="downloadImage">
           <b-icon icon="download" aria-hidden="true"></b-icon> 画像をDL
         </b-button>
-        <b-button variant="info" @click="submitSave">
-          <b-icon icon="pie-chart" aria-hidden="true"></b-icon> 結果を送信する
+        <b-overlay
+          :show="busy"
+          rounded
+          opacity="0.6"
+          spinner-small
+          spinner-variant="info"
+          class="d-inline-block"
+          @hidden="onHidden"
+        >
+          <b-button
+            ref="button"
+            :disabled="busy"
+            variant="info"
+            @click="submitSave"
+          >
+            <b-icon icon="pie-chart" aria-hidden="true"></b-icon> 結果を送信する
+          </b-button>
+        </b-overlay>
+      </template>
+    </b-modal>
+    <b-modal v-model="showCompletedModal" centered>
+      <h2 style="font-size: 22px">結果の送信が完了しました！</h2>
+      <p>全体の集計結果に反映されました。</p>
+      <template #modal-footer="{ cancel }">
+        <b-button variant="light" @click="cancel()">
+          CLOSE
+        </b-button>
+        <b-button variant="success" to="/">
+          集計結果を見る
         </b-button>
       </template>
     </b-modal>
@@ -213,7 +240,9 @@ export default {
       inMeeting: false,
       isDone: false,
       showModal: false,
-      showAlert: false
+      showAlert: false,
+      busy: false,
+      showCompletedModal: false
     };
   },
   computed: {
@@ -243,6 +272,18 @@ export default {
     zeroPad: function(value, num) {
       const _num = typeof num !== "undefined" ? num : 2;
       return value.toString().padStart(_num, "0");
+    }
+  },
+  watch: {
+    "number.men": function(newVal) {
+      if (newVal === 0) {
+        this.stopTimer("men");
+      }
+    },
+    "number.women": function(newVal) {
+      if (newVal === 0) {
+        this.stopTimer("women");
+      }
     }
   },
   methods: {
@@ -302,6 +343,8 @@ export default {
       this.showAlert = false;
     },
     submitSave() {
+      this.busy = true;
+
       api({
         method: "post",
         url: "/meetings/",
@@ -317,10 +360,15 @@ export default {
           this.showModal = false;
           this.inMeeting = false;
           this.isDone = true;
+          this.busy = false;
+          this.showCompletedModal = true;
         })
         .catch(e => {
           console.error(e);
         });
+    },
+    onHidden() {
+      this.$refs.button.focus()
     },
     close() {
       this.showModal = false;
