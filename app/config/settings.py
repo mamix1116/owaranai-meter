@@ -13,6 +13,13 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 
+if os.name == 'nt':
+    import environ
+    env = environ.Env()
+    ROOT_DIR = environ.Path(__file__) - 3
+    env_file = str(ROOT_DIR.path('.env.development.windows'))
+    env.read_env(env_file)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

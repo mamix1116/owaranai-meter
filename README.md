@@ -74,6 +74,32 @@ dev-serve
 
 entry point: http://localhost:8888/
 
+## docker-compose + local.development + windows
+
+Django
+```sh
+docker-compose -f docker-compose.development.yml -f docker-compose.development.local.yml up -d db
+cd app
+pip install pipenv
+set PIPENV_VENV_IN_PROJECT=1 (export PIPENV_VENV_IN_PROJECT=1 for linux )
+pipenv shell
+pipenv install --dev
+python -V
+pip freeze
+python manage.py migrate
+python manage.py runserver 0.0.0.0:8000 
+```
+
+Vue.js
+```sh
+cd frontend
+yarn install
+dev-serve
+```
+
+entry point: http://localhost:8888/ -> (API)http://localhost:8000/
+
+
 ## 本番環境構築
 
 ### docker-compose
