@@ -150,6 +150,5 @@ if DEBUG:  # for DEBUG
 else:
     CORS_ORIGIN_ALLOW_ALL = False
     CORS_ORIGIN_WHITELIST = (
-        'http://owaranai.tokyo',
         'https://owaranai.tokyo',
     )
