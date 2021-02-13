@@ -368,7 +368,7 @@ export default {
         });
     },
     onHidden() {
-      this.$refs.button.focus()
+      this.$refs.button.focus();
     },
     close() {
       this.showModal = false;
