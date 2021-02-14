@@ -21,7 +21,6 @@ pip-delete-this-directory.txt
 # Python
 app/venv/
 app/.venv/
-app/templates/index.html
 
 .idea
 
@@ -30,3 +29,4 @@ nginx/staticfiles/
 var/db/
 var/lib/ssl_certs/
 .env
+dot.env.production
