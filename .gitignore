@@ -21,12 +21,18 @@ pip-delete-this-directory.txt
 # Python
 app/venv/
 app/.venv/
-app/templates/index.html
 
 .idea
+*.00?
 
 # production
 nginx/staticfiles/
 var/db/
 var/lib/ssl_certs/
 .env
+
+# git-secret
+.gitsecret/keys/random_seed
+
+frontend/.env.production
+
