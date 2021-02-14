@@ -33,6 +33,4 @@ var/lib/ssl_certs/
 
 # git-secret
 .gitsecret/keys/random_seed
-
 frontend/.env.production
-

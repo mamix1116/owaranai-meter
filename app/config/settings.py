@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'meetings.apps.MeetingsConfig',
     'rest_framework',
     'corsheaders',
+    'import_export',
 ]
 
 MIDDLEWARE = [
