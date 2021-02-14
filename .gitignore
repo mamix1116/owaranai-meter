@@ -23,10 +23,14 @@ app/venv/
 app/.venv/
 
 .idea
+*.00?
 
 # production
 nginx/staticfiles/
 var/db/
 var/lib/ssl_certs/
 .env
-dot.env.production
+
+# git-secret
+.gitsecret/keys/random_seed
+frontend/.env.production
