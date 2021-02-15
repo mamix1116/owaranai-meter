@@ -74,7 +74,6 @@
         </b-row>
         <b-row align-h="center" class="my-4 py-4">
           <b-col cols="12" md="8">
-            <span>使い方</span>
             <img src="@/assets/images/torisetsu.png" alt="使い方" />
           </b-col>
         </b-row>
