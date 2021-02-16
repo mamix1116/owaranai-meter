@@ -449,7 +449,7 @@ export default {
         .attr("text-anchor", "middle")
         .text(function(d) {
           return (
-            d.data.label + ":" + (Math.floor(d.data.value / 60) % 60) + "分"
+            d.data.label + ":" + Math.floor(d.data.value / 60) + "分" + d.data.value % 60 + "秒"
           );
         });
     },
