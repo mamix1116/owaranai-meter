@@ -52,8 +52,8 @@
             :disabled="!inMeeting || !isRunning.men || number.men === 0"
           ></b-avatar>
           <div class="mt-4">
-            {{ hours("men") }} : {{ minutes("men") | zeroPad }} :
-            {{ seconds("men") | zeroPad }}
+            {{ hours('men') }} : {{ minutes('men') | zeroPad }} :
+            {{ seconds('men') | zeroPad }}
           </div>
         </b-col>
         <b-col cols="6" md="3" class="text-center">
@@ -89,8 +89,8 @@
             :disabled="!inMeeting || !isRunning.women || number.women === 0"
           ></b-avatar>
           <div class="mt-4">
-            {{ hours("women") }} : {{ minutes("women") | zeroPad }} :
-            {{ seconds("women") | zeroPad }}
+            {{ hours('women') }} : {{ minutes('women') | zeroPad }} :
+            {{ seconds('women') | zeroPad }}
           </div>
         </b-col>
       </b-row>
@@ -147,7 +147,7 @@
             />
           </div>
           <h2 class="my-4" style="font-size: 28px">
-            {{ meetingName === "" ? "あなた" : meetingName }}の会議
+            {{ meetingName === '' ? 'あなた' : meetingName }}の会議
           </h2>
           <b-row class="justify-content-around my-4" style="font-size: 24px">
             <b-col class="text-center"> 男性 {{ number.men }}人 </b-col>
@@ -204,15 +204,15 @@
 </template>
 
 <script>
-import api from "@/services/api";
-import * as d3 from "d3";
-import html2canvas from "html2canvas";
+import api from '@/services/api'
+import * as d3 from 'd3'
+import html2canvas from 'html2canvas'
 
 export default {
-  name: "TryMeter",
+  name: 'TryMeter',
   data() {
     return {
-      meetingName: "",
+      meetingName: '',
       number: {
         men: 0,
         women: 0
@@ -243,86 +243,85 @@ export default {
       showAlert: false,
       busy: false,
       showCompletedModal: false
-    };
+    }
   },
   computed: {
     hours: function() {
       return function(gender) {
-        return Math.floor(this.diffTime[gender] / 1000 / 60 / 60);
-      };
+        return Math.floor(this.diffTime[gender] / 1000 / 60 / 60)
+      }
     },
     minutes: function() {
       return function(gender) {
-        return Math.floor(this.diffTime[gender] / 1000 / 60) % 60;
-      };
+        return Math.floor(this.diffTime[gender] / 1000 / 60) % 60
+      }
     },
     seconds: function() {
       return function(gender) {
-        return Math.floor(this.diffTime[gender] / 1000) % 60;
-      };
+        return Math.floor(this.diffTime[gender] / 1000) % 60
+      }
     },
     duration: function() {
       return function(gender) {
-        return Math.floor(this.diffTime[gender] / 1000);
-      };
+        return Math.floor(this.diffTime[gender] / 1000)
+      }
     }
   },
   filters: {
     // ※ String.prototype.padStart() は IEじゃ使えない
     zeroPad: function(value, num) {
-      const _num = typeof num !== "undefined" ? num : 2;
-      return value.toString().padStart(_num, "0");
+      const _num = typeof num !== 'undefined' ? num : 2
+      return value.toString().padStart(_num, '0')
     }
   },
   watch: {
-    "number.men": function(newVal) {
+    'number.men': function(newVal) {
       if (newVal === 0) {
-        this.stopTimer("men");
+        this.stopTimer('men')
       }
     },
-    "number.women": function(newVal) {
+    'number.women': function(newVal) {
       if (newVal === 0) {
-        this.stopTimer("women");
+        this.stopTimer('women')
       }
     }
   },
   methods: {
     setSubtractStartTime(time, gender) {
-      const _time = typeof time !== "undefined" ? time : 0;
-      this.startTime[gender] = Math.floor(performance.now() - _time);
+      const _time = typeof time !== 'undefined' ? time : 0
+      this.startTime[gender] = Math.floor(performance.now() - _time)
     },
     startTimer(gender) {
-      const vm = this;
-      vm.setSubtractStartTime(vm.diffTime[gender], gender);
-
-      (function loop() {
-        vm.nowTime[gender] = Math.floor(performance.now());
-        vm.diffTime[gender] = vm.nowTime[gender] - vm.startTime[gender];
-        vm.animateFrame[gender] = requestAnimationFrame(loop);
-      })();
-      vm.isRunning[gender] = true;
+      const vm = this
+      vm.setSubtractStartTime(vm.diffTime[gender], gender)
+      ;(function loop() {
+        vm.nowTime[gender] = Math.floor(performance.now())
+        vm.diffTime[gender] = vm.nowTime[gender] - vm.startTime[gender]
+        vm.animateFrame[gender] = requestAnimationFrame(loop)
+      })()
+      vm.isRunning[gender] = true
     },
     stopTimer(gender) {
-      this.isRunning[gender] = false;
-      cancelAnimationFrame(this.animateFrame[gender]);
+      this.isRunning[gender] = false
+      cancelAnimationFrame(this.animateFrame[gender])
     },
     clearAll() {
-      this.showAlert = false;
-      this.inMeeting = false;
-      this.isDone = false;
-      this.meetingName = "";
-      this.number.men = 0;
-      this.number.women = 0;
-      this.startTime.men = 0;
-      this.startTime.women = 0;
-      this.nowTime.men = 0;
-      this.nowTime.women = 0;
-      this.diffTime.men = 0;
-      this.diffTime.women = 0;
-      this.stopTimer("men");
-      this.stopTimer("women");
-      this.animateFrame.men = 0;
-      this.animateFrame.women = 0;
+      this.showAlert = false
+      this.inMeeting = false
+      this.isDone = false
+      this.meetingName = ''
+      this.number.men = 0
+      this.number.women = 0
+      this.startTime.men = 0
+      this.startTime.women = 0
+      this.nowTime.men = 0
+      this.nowTime.women = 0
+      this.diffTime.men = 0
+      this.diffTime.women = 0
+      this.stopTimer('men')
+      this.stopTimer('women')
+      this.animateFrame.men = 0
+      this.animateFrame.women = 0
     },
     validateMeeting() {
       if (
@@ -332,143 +331,148 @@ export default {
         this.number.women < 0 ||
         (this.number.men === 0 && this.number.women === 0)
       ) {
-        this.showAlert = true;
+        this.showAlert = true
       } else {
-        this.showModal = true;
+        this.showModal = true
       }
     },
     dismissed() {
-      this.number.men = 0;
-      this.number.women = 0;
-      this.showAlert = false;
+      this.number.men = 0
+      this.number.women = 0
+      this.showAlert = false
     },
     submitSave() {
-      this.busy = true;
+      this.busy = true
 
       api({
-        method: "post",
-        url: "/meetings/",
+        method: 'post',
+        url: '/meetings/',
         data: {
           num_men: this.number.men,
           num_women: this.number.women,
-          duration_men: this.duration("men"),
-          duration_women: this.duration("women"),
+          duration_men: this.duration('men'),
+          duration_women: this.duration('women'),
           is_done: true
         }
       })
         .then(() => {
-          this.showModal = false;
-          this.inMeeting = false;
-          this.isDone = true;
-          this.busy = false;
-          this.showCompletedModal = true;
+          this.showModal = false
+          this.inMeeting = false
+          this.isDone = true
+          this.busy = false
+          this.showCompletedModal = true
         })
         .catch(e => {
-          console.error(e);
-        });
+          console.error(e)
+        })
     },
     onHidden() {
-      this.$refs.button.focus();
+      this.$refs.button.focus()
     },
     close() {
-      this.showModal = false;
-      this.inMeeting = false;
-      this.isDone = true;
+      this.showModal = false
+      this.inMeeting = false
+      this.isDone = true
     },
     drawChart() {
       const data = [
-        { label: "女性", value: this.duration("women") },
-        { label: "男性", value: this.duration("men") }
-      ];
+        { label: '女性', value: this.duration('women') },
+        { label: '男性', value: this.duration('men') }
+      ]
 
-      const svg = d3.select("#chart"),
-        width = svg.attr("width"),
-        height = svg.attr("height"),
+      const svg = d3.select('#chart'),
+        width = svg.attr('width'),
+        height = svg.attr('height'),
         radius = Math.min(width, height) / 2,
         g = d3
-          .select("#inner")
-          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+          .select('#inner')
+          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
-      const color = d3.scaleOrdinal().range(["#ff8355", "#04c4b4"]);
+      const color = d3.scaleOrdinal().range(['#ff8355', '#04c4b4'])
 
       // Generate the pie
       const pie = d3
         .pie()
         .value(function(d) {
-          return d.value;
+          return d.value
         })
-        .sort(null);
+        .sort(null)
 
       // Generate the arcs
       const arc = d3
         .arc()
         .innerRadius(0)
-        .outerRadius(radius);
+        .outerRadius(radius)
 
       //Generate groups
       const arcs = g
-        .selectAll("arc")
+        .selectAll('arc')
         .data(pie(data))
         .enter()
-        .append("g")
-        .attr("class", "arc");
+        .append('g')
+        .attr('class', 'arc')
 
       //Draw arc paths
       arcs
-        .append("path")
-        .attr("fill", function(d, i) {
-          return color(i);
+        .append('path')
+        .attr('fill', function(d, i) {
+          return color(i)
         })
-        .style("stroke", "#fff")
-        .style("stroke-width", 5)
+        .style('stroke', '#fff')
+        .style('stroke-width', 5)
         .transition()
         .delay(function(d, i) {
-          return i * 800;
+          return i * 800
         })
         .duration(1000)
-        .attrTween("d", function(d) {
-          var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
+        .attrTween('d', function(d) {
+          var i = d3.interpolate(d.startAngle + 0.1, d.endAngle)
           return function(t) {
-            d.endAngle = i(t);
-            return arc(d);
-          };
-        });
+            d.endAngle = i(t)
+            return arc(d)
+          }
+        })
 
       const text = d3
         .arc()
         .outerRadius(radius - 60)
-        .innerRadius(radius - 60);
+        .innerRadius(radius - 60)
 
       arcs
-        .append("text")
-        .attr("fill", "black")
-        .attr("transform", function(d) {
-          return "translate(" + text.centroid(d) + ")";
+        .append('text')
+        .attr('fill', 'black')
+        .attr('transform', function(d) {
+          return 'translate(' + text.centroid(d) + ')'
         })
-        .attr("dy", "5px")
-        .attr("text-anchor", "middle")
+        .attr('dy', '5px')
+        .attr('text-anchor', 'middle')
         .text(function(d) {
           return (
-            d.data.label + ":" + Math.floor(d.data.value / 60) + "分" + d.data.value % 60 + "秒"
-          );
-        });
+            d.data.label +
+            ':' +
+            Math.floor(d.data.value / 60) +
+            '分' +
+            (d.data.value % 60) +
+            '秒'
+          )
+        })
     },
     downloadImage() {
-      html2canvas(document.querySelector("#result")).then(function(canvas) {
+      html2canvas(document.querySelector('#result')).then(function(canvas) {
         canvas.toBlob(function(blob) {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          document.body.appendChild(a);
-          a.download = "owaranai-meter.png";
-          a.href = url;
-          a.click();
-          a.remove();
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          document.body.appendChild(a)
+          a.download = 'owaranai-meter.png'
+          a.href = url
+          a.click()
+          a.remove()
           setTimeout(() => {
-            URL.revokeObjectURL(url);
-          }, 1e4);
-        }, "image/png");
-      });
+            URL.revokeObjectURL(url)
+          }, 1e4)
+        }, 'image/png')
+      })
     }
   }
-};
+}
 </script>

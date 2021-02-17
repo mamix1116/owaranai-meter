@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import CommonFooter from "@/components/CommonFooter";
+import CommonFooter from '@/components/CommonFooter'
 
 export default {
   components: {
     CommonFooter
   }
-};
+}
 </script>
 
 <style>

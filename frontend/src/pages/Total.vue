@@ -83,11 +83,11 @@
 </template>
 
 <script>
-import api from "@/services/api";
-import * as d3 from "d3";
+import api from '@/services/api'
+import * as d3 from 'd3'
 
 export default {
-  name: "Total",
+  name: 'Total',
   data() {
     return {
       totalMeetingNum: 0,
@@ -96,203 +96,208 @@ export default {
       sumDurationWomen: 0,
       sumNumberMen: 0,
       sumNumberWomen: 0
-    };
+    }
   },
   mounted() {
-    this.getDataAndDrawChart();
+    this.getDataAndDrawChart()
   },
   methods: {
     getDataAndDrawChart() {
       api({
-        method: "get",
-        url: "/meetings/"
+        method: 'get',
+        url: '/meetings/'
       })
         .then(res => {
-          this.totalMeetingNum = res.data.length;
+          this.totalMeetingNum = res.data.length
           this.sumDurationMen = res.data.reduce((prev, current) => {
-            return prev + current.duration_men;
-          }, 0);
+            return prev + current.duration_men
+          }, 0)
           this.sumDurationWomen = res.data.reduce((prev, current) => {
-            return prev + current.duration_women;
-          }, 0);
+            return prev + current.duration_women
+          }, 0)
           this.sumNumberMen = res.data.reduce((prev, current) => {
-            return prev + current.num_men;
-          }, 0);
+            return prev + current.num_men
+          }, 0)
           this.sumNumberWomen = res.data.reduce((prev, current) => {
-            return prev + current.num_women;
-          }, 0);
-          this.totalParticipants = this.sumNumberMen + this.sumNumberWomen;
+            return prev + current.num_women
+          }, 0)
+          this.totalParticipants = this.sumNumberMen + this.sumNumberWomen
         })
         .then(() => {
-          this.drawChart();
-          this.drawBarChart();
+          this.drawChart()
+          this.drawBarChart()
         })
         .catch(e => {
-          console.error(e);
-        });
+          console.error(e)
+        })
     },
     drawChart() {
       const data = [
-        { label: "女性", value: this.sumDurationWomen },
-        { label: "男性", value: this.sumDurationMen }
-      ];
+        { label: '女性', value: this.sumDurationWomen },
+        { label: '男性', value: this.sumDurationMen }
+      ]
 
-      const svg = d3.select("#chart"),
-        width = svg.attr("width"),
-        height = svg.attr("height"),
+      const svg = d3.select('#chart'),
+        width = svg.attr('width'),
+        height = svg.attr('height'),
         radius = Math.min(width, height) / 2,
         g = d3
-          .select("#inner")
-          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+          .select('#inner')
+          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
-      const color = d3.scaleOrdinal().range(["#ff8355", "#04c4b4"]);
+      const color = d3.scaleOrdinal().range(['#ff8355', '#04c4b4'])
 
       // Generate the pie
       const pie = d3
         .pie()
         .value(function(d) {
-          return d.value;
+          return d.value
         })
-        .sort(null);
+        .sort(null)
 
       // Generate the arcs
       const arc = d3
         .arc()
         .innerRadius(0)
-        .outerRadius(radius);
+        .outerRadius(radius)
 
       //Generate groups
       const arcs = g
-        .selectAll("arc")
+        .selectAll('arc')
         .data(pie(data))
         .enter()
-        .append("g")
-        .attr("class", "arc");
+        .append('g')
+        .attr('class', 'arc')
 
       //Draw arc paths
       arcs
-        .append("path")
-        .attr("fill", function(d, i) {
-          return color(i);
+        .append('path')
+        .attr('fill', function(d, i) {
+          return color(i)
         })
-        .style("stroke", "#fff")
-        .style("stroke-width", 5)
+        .style('stroke', '#fff')
+        .style('stroke-width', 5)
         .transition()
         .delay(function(d, i) {
-          return i * 800;
+          return i * 800
         })
         .duration(1000)
-        .attrTween("d", function(d) {
-          var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
+        .attrTween('d', function(d) {
+          var i = d3.interpolate(d.startAngle + 0.1, d.endAngle)
           return function(t) {
-            d.endAngle = i(t);
-            return arc(d);
-          };
-        });
+            d.endAngle = i(t)
+            return arc(d)
+          }
+        })
 
       const text = d3
         .arc()
         .outerRadius(radius - 60)
-        .innerRadius(radius - 60);
+        .innerRadius(radius - 60)
 
       arcs
-        .append("text")
-        .attr("fill", "black")
-        .attr("transform", function(d) {
-          return "translate(" + text.centroid(d) + ")";
+        .append('text')
+        .attr('fill', 'black')
+        .attr('transform', function(d) {
+          return 'translate(' + text.centroid(d) + ')'
         })
-        .attr("dy", "5px")
-        .attr("text-anchor", "middle")
+        .attr('dy', '5px')
+        .attr('text-anchor', 'middle')
         .text(function(d) {
           return (
-            d.data.label + ":" + Math.floor(d.data.value / 60) + "分" + d.data.value % 60 + "秒"
-          );
-        });
+            d.data.label +
+            ':' +
+            Math.floor(d.data.value / 60) +
+            '分' +
+            (d.data.value % 60) +
+            '秒'
+          )
+        })
     },
     drawBarChart() {
       const data = [
-        { label: "男性", num: this.sumNumberMen, startPos: 0 },
+        { label: '男性', num: this.sumNumberMen, startPos: 0 },
         {
-          label: "女性",
+          label: '女性',
           num: this.sumNumberWomen,
           startPos: this.sumNumberMen
         }
-      ];
+      ]
 
       const config = {
         margin: { top: 20, right: 0, bottom: 20, left: 0 },
         width: 300,
         height: 150,
         barHeight: 75
-      };
-      const { margin, width, height, barHeight } = config;
-      const w = width - margin.left - margin.right;
-      const h = height - margin.top - margin.bottom;
-      const halfBarHeight = barHeight / 2;
+      }
+      const { margin, width, height, barHeight } = config
+      const w = width - margin.left - margin.right
+      const h = height - margin.top - margin.bottom
+      const halfBarHeight = barHeight / 2
 
-      const color = d3.scaleOrdinal().range(["#04c4b4", "#ff8355"]);
+      const color = d3.scaleOrdinal().range(['#04c4b4', '#ff8355'])
 
-      const total = d3.sum(data, d => d.num);
+      const total = d3.sum(data, d => d.num)
 
       // set up scales for horizontal placement
       const xScale = d3
         .scaleLinear()
         .domain([0, total])
-        .range([0, w]);
+        .range([0, w])
 
       // create svg in passed in div
       const selection = d3
-        .select("#barChart")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g");
+        .select('#barChart')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
 
       // stack rect for each data value
       selection
-        .selectAll("rect")
+        .selectAll('rect')
         .data(data)
         .enter()
-        .append("rect")
-        .attr("class", "rect-stacked")
-        .attr("x", d => xScale(d.startPos))
-        .attr("y", h / 2 - halfBarHeight)
-        .attr("height", barHeight)
-        .attr("width", d => xScale(d.num))
-        .attr("fill", function(d, i) {
-          return color(i);
+        .append('rect')
+        .attr('class', 'rect-stacked')
+        .attr('x', d => xScale(d.startPos))
+        .attr('y', h / 2 - halfBarHeight)
+        .attr('height', barHeight)
+        .attr('width', d => xScale(d.num))
+        .attr('fill', function(d, i) {
+          return color(i)
         })
-        .style("stroke", "#fff")
-        .style("stroke-width", 5);
+        .style('stroke', '#fff')
+        .style('stroke-width', 5)
 
       // add values on bar
       selection
-        .selectAll(".text-value")
+        .selectAll('.text-value')
         .data(data)
         .enter()
-        .append("text")
-        .attr("class", "text-value")
-        .attr("text-anchor", "middle")
-        .attr("x", d => xScale(d.startPos) + xScale(d.num) / 2)
-        .attr("y", h / 2 + 5)
-        .text(d => d.num);
+        .append('text')
+        .attr('class', 'text-value')
+        .attr('text-anchor', 'middle')
+        .attr('x', d => xScale(d.startPos) + xScale(d.num) / 2)
+        .attr('y', h / 2 + 5)
+        .text(d => d.num)
 
       // add the labels
       selection
-        .selectAll(".text-label")
+        .selectAll('.text-label')
         .data(data)
         .enter()
-        .append("text")
-        .attr("class", "text-label")
-        .attr("text-anchor", "middle")
-        .attr("x", d => xScale(d.startPos) + xScale(d.num) / 2)
-        .attr("y", h / 2 + halfBarHeight * 1.1 + 20)
-        .attr("fill", function(d, i) {
-          return color(i);
+        .append('text')
+        .attr('class', 'text-label')
+        .attr('text-anchor', 'middle')
+        .attr('x', d => xScale(d.startPos) + xScale(d.num) / 2)
+        .attr('y', h / 2 + halfBarHeight * 1.1 + 20)
+        .attr('fill', function(d, i) {
+          return color(i)
         })
-        .text(d => d.label);
+        .text(d => d.label)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
