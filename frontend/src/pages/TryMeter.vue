@@ -6,7 +6,7 @@
           <img
             src="@/assets/images/meter_logo-middle.png"
             width="550"
-            alt="発言が終わらないメーター"
+            :alt="$t('title')"
           />
         </router-link>
       </h1>
@@ -15,12 +15,12 @@
           <b-form-input v-model="meetingName"></b-form-input>
         </b-col>
         <span>
-          の会議
+          {{ $t('meeting_of') }}
         </span>
       </b-row>
       <b-row class="justify-content-md-center mb-4">
         <b-col cols="6" md="3" class="text-center">
-          <div class="font-weight-bold">男性</div>
+          <div class="font-weight-bold">{{ $t('men') }}</div>
           <b-row align-v="center" align-h="center" class="mb-4">
             <b-col cols="6">
               <b-form-input
@@ -32,7 +32,7 @@
               ></b-form-input>
             </b-col>
             <span>
-              人
+              {{ $t('unit.people') }}
             </span>
           </b-row>
           <b-avatar
@@ -57,7 +57,7 @@
           </div>
         </b-col>
         <b-col cols="6" md="3" class="text-center">
-          <div class="font-weight-bold">女性</div>
+          <div class="font-weight-bold">{{ $t('women') }}</div>
           <b-row align-v="center" align-h="center" class="mb-4">
             <b-col cols="6">
               <b-form-input
@@ -69,7 +69,7 @@
               ></b-form-input>
             </b-col>
             <span>
-              人
+              {{ $t('unit.people') }}
             </span>
           </b-row>
           <b-avatar
@@ -103,7 +103,7 @@
             variant="danger"
             @dismissed="dismissed"
           >
-            人数の値が不正です。合計して1以上か、0〜500の数値を入力してください。
+            {{ $t('alert_number') }}
           </b-alert>
         </b-col>
         <b-col cols="10" md="6" class="mb-4">
@@ -113,15 +113,15 @@
             variant="primary"
             @click="inMeeting = true"
           >
-            会議開始
+            {{ $t('button.start_meeting') }}
           </b-button>
           <b-button v-else block variant="info" @click="validateMeeting">
-            会議終了
+            {{ $t('button.stop_meeting') }}
           </b-button>
         </b-col>
         <b-col cols="10" md="6">
           <b-button block variant="secondary" class="mb-4" @click="clearAll">
-            リセット
+            {{ $t('button.reset_meeting') }}
           </b-button>
         </b-col>
         <b-col cols="10" md="6">
@@ -131,7 +131,7 @@
             variant="outline-success"
             @click="showModal = true"
           >
-            もう一度結果を見る
+            {{ $t('button.show_result_again') }}
           </b-button>
         </b-col>
       </b-row>
@@ -143,15 +143,23 @@
             <img
               src="@/assets/images/meter_logo-horizontal.png"
               width="300"
-              alt="発言が終わらないメーター"
+              :alt="$t('title')"
             />
           </div>
           <h2 class="my-4" style="font-size: 28px">
-            {{ meetingName === '' ? 'あなた' : meetingName }}の会議
+            {{
+              meetingName === ''
+                ? $t('your_meeting')
+                : meetingName + $t('meeting_of')
+            }}
           </h2>
           <b-row class="justify-content-around my-4" style="font-size: 24px">
-            <b-col class="text-center"> 男性 {{ number.men }}人 </b-col>
-            <b-col class="text-center"> 女性 {{ number.women }}人 </b-col>
+            <b-col class="text-center">{{
+              $t('men') + ' ' + number.men + $t('unit.people')
+            }}</b-col>
+            <b-col class="text-center">{{
+              $t('women') + ' ' + number.women + $t('unit.people')
+            }}</b-col>
           </b-row>
           <b-row class="justify-content-center my-4">
             <svg id="chart" width="220" height="220">
@@ -163,10 +171,11 @@
       </div>
       <template #modal-footer>
         <b-button variant="light" @click="close">
-          CLOSE
+          {{ $t('button.close') }}
         </b-button>
         <b-button variant="success" @click="downloadImage">
-          <b-icon icon="download" aria-hidden="true"></b-icon> 画像をDL
+          <b-icon icon="download" aria-hidden="true"></b-icon>
+          {{ $t('button.download') }}
         </b-button>
         <b-overlay
           :show="busy"
@@ -183,20 +192,21 @@
             variant="info"
             @click="submitSave"
           >
-            <b-icon icon="pie-chart" aria-hidden="true"></b-icon> 結果を送信する
+            <b-icon icon="pie-chart" aria-hidden="true"></b-icon>
+            {{ $t('button.send_data') }}
           </b-button>
         </b-overlay>
       </template>
     </b-modal>
     <b-modal v-model="showCompletedModal" centered>
-      <h2 style="font-size: 22px">結果の送信が完了しました！</h2>
-      <p>全体の集計結果に反映されました。</p>
+      <h2 style="font-size: 22px">{{ $t('title_completed') }}</h2>
+      <p>{{ $t('reflected_total') }}</p>
       <template #modal-footer="{ cancel }">
         <b-button variant="light" @click="cancel()">
-          CLOSE
+          {{ $t('button.close') }}
         </b-button>
         <b-button variant="success" to="/">
-          集計結果を見る
+          {{ $t('button.go_total_result') }}
         </b-button>
       </template>
     </b-modal>
@@ -376,8 +386,8 @@ export default {
     },
     drawChart() {
       const data = [
-        { label: '女性', value: this.duration('women') },
-        { label: '男性', value: this.duration('men') }
+        { label: this.$t('women'), value: this.duration('women') },
+        { label: this.$t('men'), value: this.duration('men') }
       ]
 
       const svg = d3.select('#chart'),
@@ -446,14 +456,14 @@ export default {
         })
         .attr('dy', '5px')
         .attr('text-anchor', 'middle')
-        .text(function(d) {
+        .text(d => {
           return (
             d.data.label +
             ':' +
             Math.floor(d.data.value / 60) +
-            '分' +
+            this.$t('unit.minutes') +
             (d.data.value % 60) +
-            '秒'
+            this.$t('unit.seconds')
           )
         })
     },

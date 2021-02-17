@@ -6,7 +6,7 @@
           <h1>
             <img
               src="@/assets/images/meter_logo-large.png"
-              alt="発言が終わらないメーター"
+              :alt="$t('title')"
             />
           </h1>
           <div class="text-center">#owaranai</div>
@@ -16,16 +16,17 @@
               rel="nofollow"
               target="_blank"
             >
-              <b-icon icon="twitter" aria-hidden="true"></b-icon> Tweet
+              <b-icon icon="twitter" aria-hidden="true"></b-icon>
+              {{ $t('tweet') }}
             </a>
           </div>
         </b-col>
       </b-row>
       <div class="text-center my-4 py-2">
-        <p class="lead">“女性が多い会議”は本当に“時間がかかる”のか？</p>
-        <p>会議中の発言時間を計測・可視化します。</p>
+        <p class="lead">{{ $t('lead') }}</p>
+        <p>{{ $t('lead_sub') }}</p>
       </div>
-      <h2 class="my-4">みんなの会議の集計結果</h2>
+      <h2 class="my-4">{{ $t('title_result') }}</h2>
       <b-row>
         <b-col cols="12" md="6" class="my-4">
           <div v-if="totalMeetingNum !== 0" class="text-center">
@@ -36,11 +37,15 @@
         </b-col>
         <b-col cols="12" md="6" class="my-4">
           <dl>
-            <dt>これまでの集計</dt>
-            <dd class="totalNumberText">{{ totalMeetingNum }}会議</dd>
-            <dt>参加人数</dt>
-            <dd class="totalNumberText">{{ totalParticipants }}人</dd>
-            <dt>参加者の構成</dt>
+            <dt>{{ $t('result_total') }}</dt>
+            <dd class="totalNumberText">
+              {{ totalMeetingNum + $t('unit.meeting') }}
+            </dd>
+            <dt>{{ $t('result_people') }}</dt>
+            <dd class="totalNumberText">
+              {{ totalParticipants + $t('unit.people') }}
+            </dd>
+            <dt>{{ $t('result_composition') }}</dt>
             <dd>
               <div v-if="totalMeetingNum !== 0" class="text-center">
                 <svg id="barChart"></svg>
@@ -51,15 +56,11 @@
       </b-row>
       <hr />
       <div class="my-4">
-        <h2 class="text-center">会議中の発言時間を計測・可視化します。</h2>
-        <p>
-          男性・女性それぞれのスタート、ストップを押して、会議中の発言時間を計測してください。
-        </p>
+        <h2 class="text-center">{{ $t('title_meter') }}</h2>
+        <p>{{ $t('request_for_measurement') }}</p>
         <b-row align-h="center">
           <b-col cols="12" md="6">
-            <p style="font-size: 14px">
-              統計情報の収集のため、計測結果をサーバに送信します。（会議名は送信されません）。計測ボタンを押すと同意したことになります。
-            </p>
+            <p style="font-size: 14px">{{ $t('consent_to_send_to_server') }}</p>
             <b-button
               to="/try_meter"
               pill
@@ -68,13 +69,13 @@
               size="lg"
               class="buttonShadow"
             >
-              計測する
+              {{ $t('button.measure') }}
             </b-button>
           </b-col>
         </b-row>
         <b-row align-h="center" class="my-4 py-4">
           <b-col cols="12" md="8">
-            <img src="@/assets/images/torisetsu.png" alt="使い方" />
+            <img src="@/assets/images/torisetsu.png" :alt="$t('how_to_use')" />
           </b-col>
         </b-row>
       </div>
@@ -133,8 +134,8 @@ export default {
     },
     drawChart() {
       const data = [
-        { label: '女性', value: this.sumDurationWomen },
-        { label: '男性', value: this.sumDurationMen }
+        { label: this.$t('women'), value: this.sumDurationWomen },
+        { label: this.$t('men'), value: this.sumDurationMen }
       ]
 
       const svg = d3.select('#chart'),
@@ -183,7 +184,7 @@ export default {
         })
         .duration(1000)
         .attrTween('d', function(d) {
-          var i = d3.interpolate(d.startAngle + 0.1, d.endAngle)
+          const i = d3.interpolate(d.startAngle + 0.1, d.endAngle)
           return function(t) {
             d.endAngle = i(t)
             return arc(d)
@@ -203,22 +204,22 @@ export default {
         })
         .attr('dy', '5px')
         .attr('text-anchor', 'middle')
-        .text(function(d) {
+        .text(d => {
           return (
             d.data.label +
             ':' +
             Math.floor(d.data.value / 60) +
-            '分' +
+            this.$t('unit.minutes') +
             (d.data.value % 60) +
-            '秒'
+            this.$t('unit.seconds')
           )
         })
     },
     drawBarChart() {
       const data = [
-        { label: '男性', num: this.sumNumberMen, startPos: 0 },
+        { label: this.$t('men'), num: this.sumNumberMen, startPos: 0 },
         {
-          label: '女性',
+          label: this.$t('women'),
           num: this.sumNumberWomen,
           startPos: this.sumNumberMen
         }
