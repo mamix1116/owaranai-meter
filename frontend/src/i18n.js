@@ -11,14 +11,16 @@ const locales = [
 ]
 
 let message = {}
-const locale = locales.filter(v => v.iso === window.navigator.language)
+const locale = locales.filter(
+  v => v.code === window.navigator.language.toLowerCase().split('-')[0]
+)[0]
 
-message[locale[0].code] = require(`./assets/i18n/${locale[0].file}`)
+message[locale.code] = require(`./assets/i18n/${locale.file}`)
 
 Vue.use(VueI18n)
 
 export const i18n = new VueI18n({
-  locale,
+  locale: locale.code,
   fallbackLocale: 'ja',
   messages: message
 })
