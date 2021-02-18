@@ -40,6 +40,7 @@
             button
             size="84px"
             src="@/assets/images/avatar_silent.png"
+            class="avatarButton"
             @click="startTimer('men')"
             :disabled="!inMeeting || isRunning.men || number.men === 0"
           ></b-avatar>
@@ -48,6 +49,7 @@
             button
             size="84px"
             src="@/assets/images/avatar_men.png"
+            class="avatarButton"
             @click="stopTimer('men')"
             :disabled="!inMeeting || !isRunning.men || number.men === 0"
           ></b-avatar>
@@ -77,6 +79,7 @@
             button
             size="84px"
             src="@/assets/images/avatar_silent.png"
+            class="avatarButton"
             @click="startTimer('women')"
             :disabled="!inMeeting || isRunning.women || number.women === 0"
           ></b-avatar>
@@ -85,6 +88,7 @@
             button
             size="84px"
             src="@/assets/images/avatar_women.png"
+            class="avatarButton"
             @click="stopTimer('women')"
             :disabled="!inMeeting || !isRunning.women || number.women === 0"
           ></b-avatar>
@@ -487,3 +491,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.avatarButton {
+  @include solid-button($secondary);
+}
+</style>
