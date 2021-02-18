@@ -15,6 +15,7 @@ django-filter = "*"
 pillow = "*"
 django-cors-headers = "*"
 django-import-export = "*"
+django-allauth = "*"
 
 [requires]
 python_version = "3.8"
