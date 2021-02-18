@@ -314,6 +314,15 @@ export default {
         vm.animateFrame[gender] = requestAnimationFrame(loop)
       })()
       vm.isRunning[gender] = true
+
+      switch (gender) {
+        case 'men':
+          this.stopTimer('women')
+          break
+        case 'women':
+          this.stopTimer('men')
+          break
+      }
     },
     stopTimer(gender) {
       this.isRunning[gender] = false
