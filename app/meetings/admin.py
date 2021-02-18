@@ -13,7 +13,7 @@ class MeetingResource(resources.ModelResource):
 
 
 class MeetingAdmin(ImportExportModelAdmin):
-    list_display = ('meeting_id', 'num_men', 'num_women', 'duration_men', 'duration_women', 'created_at', 'is_done')
+    list_display = ('meeting_id', 'num_men', 'num_women', 'duration_men', 'duration_women', 'created_at', 'is_done', 'locale')
     list_per_page = 50
     resource_class = MeetingResource
 
