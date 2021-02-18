@@ -42,5 +42,12 @@ module.exports = {
 
         return options
       })
+  },
+  css: {
+    loaderOptions: {
+      scss: {
+        prependData: '@import "./src/assets/scss/variables.scss";'
+      }
+    }
   }
 }

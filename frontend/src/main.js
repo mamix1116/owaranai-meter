@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueGtag from 'vue-gtag'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
-import '@/assets/global.scss'
-import '@/assets/custom.scss'
+import '@/assets/scss/global.scss'
 
 import App from './App.vue'
 import router from './router'
