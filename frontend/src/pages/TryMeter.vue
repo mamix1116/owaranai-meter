@@ -362,7 +362,8 @@ export default {
           num_women: this.number.women,
           duration_men: this.duration('men'),
           duration_women: this.duration('women'),
-          is_done: true
+          is_done: true,
+          locale: this.$i18n.locale
         }
       })
         .then(() => {
