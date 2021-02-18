@@ -17,6 +17,6 @@
 
 <script>
 export default {
-  name: "CommonFooter"
-};
+  name: 'CommonFooter'
+}
 </script>

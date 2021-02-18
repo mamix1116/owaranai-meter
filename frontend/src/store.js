@@ -1,7 +1,7 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
@@ -9,14 +9,14 @@ const store = new Vuex.Store({
   },
   mutations: {
     setMeetingData(state, payload) {
-      state.meetingData = payload;
+      state.meetingData = payload
     }
   },
   actions: {
     setData({ commit }, payload) {
-      commit("setMeetingData", payload);
+      commit('setMeetingData', payload)
     }
   }
-});
+})
 
-export default store;
+export default store
