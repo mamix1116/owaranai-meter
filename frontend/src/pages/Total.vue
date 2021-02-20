@@ -67,7 +67,7 @@
               block
               variant="primary"
               size="lg"
-              class="buttonShadow"
+              class="buttonToNextPage"
             >
               {{ $t('button.measure') }}
             </b-button>
@@ -305,10 +305,7 @@ export default {
 .totalNumberText {
   font-size: 28px;
 }
-.buttonShadow {
-  box-shadow: 0 3px 3px #aeaeae;
-  &:hover {
-    box-shadow: none;
-  }
+.buttonToNextPage {
+  @include solid-button($primary);
 }
 </style>
