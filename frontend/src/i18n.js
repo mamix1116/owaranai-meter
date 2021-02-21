@@ -1,27 +1,22 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
-
-const locales = [
-  {
-    //default
-    code: 'ja',
-    iso: 'ja-JP',
-    displayName: '日本語',
-    file: 'ja.json'
-  }
-]
+import { SUPPORTED_LOCALES } from '@/locales'
 
 let message = {}
-const locale =
-  locales.filter(
-    v => v.code === window.navigator.language.toLowerCase().split('-')[0]
-  )[0] || locales[0]
+SUPPORTED_LOCALES.forEach(item => {
+  message[item.code] = require(`./assets/i18n/${item.file}`)
+})
 
-message[locale.code] = require(`./assets/i18n/${locale.file}`)
+export const navigatorLanguage = window.navigator.language.toLowerCase().split('-')[0]
+const locale =
+  SUPPORTED_LOCALES.filter(
+    v => v.code === navigatorLanguage
+  )[0] || SUPPORTED_LOCALES[0]
 
 Vue.use(VueI18n)
 
 export const i18n = new VueI18n({
+  silentTranslationWarn: true,
   locale: locale.code,
   fallbackLocale: 'ja',
   messages: message

@@ -5,18 +5,24 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    meetingData: {}
+    locale: {}
+  },
+  getters: {
+    locale(state) {
+      return state.locale
+    }
   },
   mutations: {
-    setMeetingData(state, payload) {
-      state.meetingData = payload
+    setLocale(state, payload) {
+      state.locale = payload
     }
   },
   actions: {
-    setData({ commit }, payload) {
-      commit('setMeetingData', payload)
+    setLocale({ commit }, payload) {
+      commit('setLocale', payload)
     }
-  }
+  },
+  modules: {}
 })
 
 export default store

@@ -62,7 +62,7 @@
           <b-col cols="12" md="6">
             <p style="font-size: 14px">{{ $t('consent_to_send_to_server') }}</p>
             <b-button
-              to="/try_meter"
+              :to="locale.base + '/try_meter'"
               pill
               block
               variant="primary"
@@ -86,6 +86,7 @@
 <script>
 import api from '@/services/api'
 import * as d3 from 'd3'
+import store from '@/store'
 
 export default {
   name: 'Total',
@@ -101,6 +102,11 @@ export default {
   },
   mounted() {
     this.getDataAndDrawChart()
+  },
+  computed: {
+    locale() {
+      return store.getters.locale
+    }
   },
   methods: {
     getDataAndDrawChart() {

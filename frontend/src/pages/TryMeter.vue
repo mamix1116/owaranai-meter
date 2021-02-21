@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <h1 class="text-center">
-        <router-link to="/">
+        <router-link :to="locale.base + '/'">
           <img
             src="@/assets/images/meter_logo-middle.png"
             width="550"
@@ -209,7 +209,7 @@
         <b-button variant="light" @click="cancel()">
           {{ $t('button.close') }}
         </b-button>
-        <b-button variant="success" to="/">
+        <b-button variant="success" :to="locale.base + '/'">
           {{ $t('button.go_total_result') }}
         </b-button>
       </template>
@@ -221,6 +221,7 @@
 import api from '@/services/api'
 import * as d3 from 'd3'
 import html2canvas from 'html2canvas'
+import store from '@/store'
 
 export default {
   name: 'TryMeter',
@@ -260,6 +261,9 @@ export default {
     }
   },
   computed: {
+    locale() {
+      return store.getters.locale
+    },
     hours: function() {
       return function(gender) {
         return Math.floor(this.diffTime[gender] / 1000 / 60 / 60)
