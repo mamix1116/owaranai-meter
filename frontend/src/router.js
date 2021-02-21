@@ -18,7 +18,7 @@ function getLocaleRegex() {
   return `(${reg})`
 }
 
-function getLocale(locale='ja') {
+function getLocale(locale = 'ja') {
   return SUPPORTED_LOCALES.find(loc => loc.code === locale)
 }
 

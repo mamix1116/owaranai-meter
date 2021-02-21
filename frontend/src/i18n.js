@@ -7,11 +7,12 @@ SUPPORTED_LOCALES.forEach(item => {
   message[item.code] = require(`./assets/i18n/${item.file}`)
 })
 
-export const navigatorLanguage = window.navigator.language.toLowerCase().split('-')[0]
+export const navigatorLanguage = window.navigator.language
+  .toLowerCase()
+  .split('-')[0]
 const locale =
-  SUPPORTED_LOCALES.filter(
-    v => v.code === navigatorLanguage
-  )[0] || SUPPORTED_LOCALES[0]
+  SUPPORTED_LOCALES.filter(v => v.code === navigatorLanguage)[0] ||
+  SUPPORTED_LOCALES[0]
 
 Vue.use(VueI18n)
 
