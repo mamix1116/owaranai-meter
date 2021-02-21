@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueMeta from 'vue-meta'
 import VueGtag from 'vue-gtag'
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import '@/assets/scss/global.scss'
@@ -26,6 +27,8 @@ Vue.use(
   },
   router
 )
+
+Vue.use(VueMeta)
 
 new Vue({
   router,
