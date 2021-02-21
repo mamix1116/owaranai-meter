@@ -22,24 +22,36 @@ export default {
       ? {
           title: this.$root.$t('title'),
           meta: [
-            { name: 'description', content: this.$root.$t('lead') },
-            { property: 'og:title', content: this.$root.$t('title') },
-            { property: 'og:description', content: this.$root.$t('lead') },
-            { property: 'og:site_name', content: this.$root.$t('title') },
             {
+              vmid: 'description',
+              name: 'description',
+              content: this.$root.$t('lead')
+            },
+            {
+              vmid: 'og:title',
+              property: 'og:title',
+              content: this.$root.$t('title')
+            },
+            {
+              vmid: 'og:description',
+              property: 'og:description',
+              content: this.$root.$t('lead')
+            },
+            {
+              vmid: 'og:site_name',
+              property: 'og:site_name',
+              content: this.$root.$t('title')
+            },
+            {
+              vmid: 'og:image',
               property: 'og:image',
               content: 'https://owaranai.tokyo/ogp.png'
-            },
-            { property: 'og:url', content: 'https://owaranai.tokyo' },
-            { property: 'og:type', content: 'website' },
-            { property: 'fb:app_id', content: '812810555941690' },
-            { name: 'twitter:card', content: 'summary_large_image' },
-            { name: 'twitter:site', content: '@mamix1116' }
+            }
           ]
         }
       : null
   },
-  mounted() {
+  created() {
     this.initialized = true
   }
 }
