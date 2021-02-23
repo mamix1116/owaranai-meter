@@ -17,7 +17,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['~/plugins/api.ts'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -43,7 +43,18 @@ export default {
   i18n: {},
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseURL: 'http://127.0.0.1:8000/api/v1/',
+    proxy: true,
+  },
+
+  proxy: {
+    '^/api/': {
+      target: 'http://127.0.0.1:8000',
+      changeOrigin: true,
+      pathRewrite: { '^/api/': '/api/' },
+    },
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
@@ -51,9 +62,19 @@ export default {
   googleAnalytics: {
     id: process.env.GOOGLE_ANALYTICS_ID, // Use as fallback if no runtime config is provided
   },
+
   publicRuntimeConfig: {
     googleAnalytics: {
-      id: process.env.GOOGLE_ANALYTICS_ID
-    }
-  }
+      id: process.env.GOOGLE_ANALYTICS_ID,
+    },
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+    },
+  },
+
+  privateRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+    },
+  },
 }
