@@ -75,7 +75,10 @@
         </b-row>
         <b-row align-h="center" class="my-4 py-4">
           <b-col cols="12" md="8">
-            <img :src="require(`@/assets/images/${imgSrc}`)" :alt="$t('how_to_use')" />
+            <img
+              :src="require(`@/assets/images/${imgSrc}`)"
+              :alt="$t('how_to_use')"
+            />
           </b-col>
         </b-row>
       </div>
