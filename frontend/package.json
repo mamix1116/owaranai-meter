@@ -26,6 +26,8 @@
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.8.3",
+    "d3": "^6.5.0",
+    "html2canvas": "^1.0.0-rc.7",
     "nuxt": "^2.14.12"
   },
   "devDependencies": {
