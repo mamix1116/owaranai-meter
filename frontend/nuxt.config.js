@@ -3,7 +3,7 @@ export default {
   head: {
     title: 'owaranai-meter',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ja',
     },
     meta: [
       { charset: 'utf-8' },
@@ -36,7 +36,9 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'nuxt-i18n',
   ],
+  i18n: {},
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

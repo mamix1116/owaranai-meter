@@ -28,7 +28,8 @@
     "core-js": "^3.8.3",
     "d3": "^6.5.0",
     "html2canvas": "^1.0.0-rc.7",
-    "nuxt": "^2.14.12"
+    "nuxt": "^2.14.12",
+    "nuxt-i18n": "^6.20.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.12",
