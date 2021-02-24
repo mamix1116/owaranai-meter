@@ -4,8 +4,8 @@ $secondary: #e0e0de;
 $success: #FFD62A;
 $info: #353940;
 
-@import '../../../node_modules/bootstrap/scss/bootstrap';
-@import '../../../node_modules/bootstrap-vue/src/index';
+@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap-vue/src/index';
 
 @mixin solid-button($color) {
   position: relative;
