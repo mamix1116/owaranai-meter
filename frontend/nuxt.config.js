@@ -3,6 +3,7 @@ export default {
   head: {
     htmlAttrs: {
       lang: 'ja',
+      prefix: 'og: http://ogp.me/ns#',
     },
     meta: [
       { charset: 'utf-8' },
@@ -26,7 +27,7 @@ export default {
   css: ['@/assets/scss/global.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/api.ts'],
+  plugins: ['@/plugins/api.ts'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
