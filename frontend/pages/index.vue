@@ -58,7 +58,7 @@
         <b-col cols="12" md="6">
           <p style="font-size: 14px">{{ $t('consent_to_send_to_server') }}</p>
           <b-button
-            to="/try_meter"
+            :to="localePath('/try_meter')"
             pill
             block
             variant="primary"

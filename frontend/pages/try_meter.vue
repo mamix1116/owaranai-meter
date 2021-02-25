@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <h1 class="text-center">
-        <router-link to="/">
+        <router-link :to="localePath('/')">
           <img
             src="@/assets/images/meter_logo-middle.png"
             width="550"
@@ -209,7 +209,7 @@
         <b-button variant="light" @click="cancel()">
           {{ $t('button.close') }}
         </b-button>
-        <b-button variant="success" to="/">
+        <b-button variant="success" :to="localePath('/')">
           {{ $t('button.go_total_result') }}
         </b-button>
       </template>
