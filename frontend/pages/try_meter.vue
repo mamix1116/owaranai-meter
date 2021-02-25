@@ -466,13 +466,13 @@ export default Vue.extend({
       // Draw arc paths
       arcs
         .append('path')
-        .attr('fill', function (_:any, i: any) {
+        .attr('fill', function (_: any, i: any) {
           return color(i)
         })
         .style('stroke', '#fff')
         .style('stroke-width', 5)
         .transition()
-        .delay(function (_:any, i: any) {
+        .delay(function (_: any, i: any) {
           return i * 800
         })
         .duration(1000)

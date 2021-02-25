@@ -183,13 +183,13 @@ export default Vue.extend({
       // Draw arc paths
       arcs
         .append('path')
-        .attr('fill', function (_:any, i: any) {
+        .attr('fill', function (_: any, i: any) {
           return color(i)
         })
         .style('stroke', '#fff')
         .style('stroke-width', 5)
         .transition()
-        .delay(function (_:any, i: any) {
+        .delay(function (_: any, i: any) {
           return i * 800
         })
         .duration(1000)
@@ -271,7 +271,7 @@ export default Vue.extend({
         .attr('y', h / 2 - halfBarHeight)
         .attr('height', barHeight)
         .attr('width', (d: any) => xScale(d.num))
-        .attr('fill', function (_:any, i: any) {
+        .attr('fill', function (_: any, i: any) {
           return color(i)
         })
         .style('stroke', '#fff')
@@ -299,7 +299,7 @@ export default Vue.extend({
         .attr('text-anchor', 'middle')
         .attr('x', (d: any) => xScale(d.startPos) + xScale(d.num) / 2)
         .attr('y', h / 2 + halfBarHeight * 1.1 + 20)
-        .attr('fill', function (_:any, i: any) {
+        .attr('fill', function (_: any, i: any) {
           return color(i)
         })
         .text((d: any) => d.label)
