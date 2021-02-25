@@ -3,10 +3,7 @@
     <b-row align-h="center">
       <b-col cols="12" md="8">
         <h1>
-          <img
-            src="@/assets/images/meter_logo-large.png"
-            :alt="$t('title')"
-          />
+          <img src="@/assets/images/meter_logo-large.png" :alt="$t('title')" />
         </h1>
         <div class="text-center">#owaranai</div>
         <div class="text-center">
@@ -61,7 +58,7 @@
         <b-col cols="12" md="6">
           <p style="font-size: 14px">{{ $t('consent_to_send_to_server') }}</p>
           <b-button
-            to="/try_meter"
+            :to="localePath('/try_meter')"
             pill
             block
             variant="primary"
@@ -91,12 +88,12 @@ import { Meeting } from '@/types/component-interfaces/api'
 
 export default Vue.extend({
   data(): {
-    totalMeetingNum: number;
-    totalParticipants: number;
-    sumDurationMen: number;
-    sumDurationWomen: number;
-    sumNumberMen: number;
-    sumNumberWomen: number;
+    totalMeetingNum: number
+    totalParticipants: number
+    sumDurationMen: number
+    sumDurationWomen: number
+    sumNumberMen: number
+    sumNumberWomen: number
   } {
     return {
       totalMeetingNum: 0,
@@ -104,11 +101,8 @@ export default Vue.extend({
       sumDurationMen: 0,
       sumDurationWomen: 0,
       sumNumberMen: 0,
-      sumNumberWomen: 0
+      sumNumberWomen: 0,
     }
-  },
-  mounted() {
-    this.getDataAndDrawChart()
   },
   computed: {
     imgSrc() {
@@ -118,11 +112,15 @@ export default Vue.extend({
         default:
           return 'torisetsu.png'
       }
-    }
+    },
+  },
+  mounted() {
+    this.getDataAndDrawChart()
   },
   methods: {
     getDataAndDrawChart() {
-      this.$axios.$get('http://127.0.0.1:8000/api/v1/meetings/')
+      this.$axios
+        .$get('http://127.0.0.1:8000/api/v1/meetings/')
         .then((res: Meeting[]) => {
           this.totalMeetingNum = res.length
           this.sumDurationMen = res.reduce((prev, current) => {
@@ -143,41 +141,38 @@ export default Vue.extend({
           this.drawChart()
           this.drawBarChart()
         })
-        .catch(e => {
+        .catch((e) => {
           console.error(e)
         })
     },
     drawChart() {
       const data = [
         { label: this.$t('women'), value: this.sumDurationWomen },
-        { label: this.$t('men'), value: this.sumDurationMen }
+        { label: this.$t('men'), value: this.sumDurationMen },
       ]
 
-      const svg = d3.select('#chart'),
-        width = svg.attr('width'),
-        height = svg.attr('height'),
-        radius = Math.min(width, height) / 2,
-        g = d3
-          .select('#inner')
-          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+      const svg = d3.select('#chart')
+      const width = svg.attr('width')
+      const height = svg.attr('height')
+      const radius = Math.min(width, height) / 2
+      const g = d3
+        .select('#inner')
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
       const color = d3.scaleOrdinal().range(['#ff8355', '#04c4b4'])
 
       // Generate the pie
       const pie = d3
         .pie()
-        .value(function(d: any) {
+        .value(function (d: any) {
           return d.value
         })
         .sort(null)
 
       // Generate the arcs
-      const arc = d3
-        .arc()
-        .innerRadius(0)
-        .outerRadius(radius)
+      const arc = d3.arc().innerRadius(0).outerRadius(radius)
 
-      //Generate groups
+      // Generate groups
       const arcs = g
         .selectAll('arc')
         .data(pie(data))
@@ -185,22 +180,22 @@ export default Vue.extend({
         .append('g')
         .attr('class', 'arc')
 
-      //Draw arc paths
+      // Draw arc paths
       arcs
         .append('path')
-        .attr('fill', function(d: any, i: any) {
+        .attr('fill', function (_: any, i: any) {
           return color(i)
         })
         .style('stroke', '#fff')
         .style('stroke-width', 5)
         .transition()
-        .delay(function(d: any, i: any) {
+        .delay(function (_: any, i: any) {
           return i * 800
         })
         .duration(1000)
-        .attrTween('d', function(d: any) {
+        .attrTween('d', function (d: any) {
           const i = d3.interpolate(d.startAngle + 0.1, d.endAngle)
-          return function(t: any) {
+          return function (t: any) {
             d.endAngle = i(t)
             return arc(d)
           }
@@ -214,7 +209,7 @@ export default Vue.extend({
       arcs
         .append('text')
         .attr('fill', 'black')
-        .attr('transform', function(d: any) {
+        .attr('transform', function (d: any) {
           return 'translate(' + text.centroid(d) + ')'
         })
         .attr('dy', '5px')
@@ -236,15 +231,15 @@ export default Vue.extend({
         {
           label: this.$t('women'),
           num: this.sumNumberWomen,
-          startPos: this.sumNumberMen
-        }
+          startPos: this.sumNumberMen,
+        },
       ]
 
       const config = {
         margin: { top: 20, right: 0, bottom: 20, left: 0 },
         width: 300,
         height: 150,
-        barHeight: 75
+        barHeight: 75,
       }
       const { margin, width, height, barHeight } = config
       const w = width - margin.left - margin.right
@@ -256,10 +251,7 @@ export default Vue.extend({
       const total = d3.sum(data, (d: any) => d.num)
 
       // set up scales for horizontal placement
-      const xScale = d3
-        .scaleLinear()
-        .domain([0, total])
-        .range([0, w])
+      const xScale = d3.scaleLinear().domain([0, total]).range([0, w])
 
       // create svg in passed in div
       const selection = d3
@@ -279,7 +271,7 @@ export default Vue.extend({
         .attr('y', h / 2 - halfBarHeight)
         .attr('height', barHeight)
         .attr('width', (d: any) => xScale(d.num))
-        .attr('fill', function(d: any, i: any) {
+        .attr('fill', function (_: any, i: any) {
           return color(i)
         })
         .style('stroke', '#fff')
@@ -307,12 +299,12 @@ export default Vue.extend({
         .attr('text-anchor', 'middle')
         .attr('x', (d: any) => xScale(d.startPos) + xScale(d.num) / 2)
         .attr('y', h / 2 + halfBarHeight * 1.1 + 20)
-        .attr('fill', function(d: any, i: any) {
+        .attr('fill', function (_: any, i: any) {
           return color(i)
         })
         .text((d: any) => d.label)
-    }
-  }
+    },
+  },
 })
 </script>
 
