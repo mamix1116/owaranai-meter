@@ -41,8 +41,8 @@
             size="84px"
             src="@/assets/images/avatar_silent.png"
             class="avatarButton"
-            @click="startTimer('men')"
             :disabled="!inMeeting || isRunning.men || number.men === 0"
+            @click="startTimer('men')"
           ></b-avatar>
           <b-avatar
             v-else
@@ -50,8 +50,8 @@
             size="84px"
             src="@/assets/images/avatar_men.png"
             class="avatarButton"
-            @click="stopTimer('men')"
             :disabled="!inMeeting || !isRunning.men || number.men === 0"
+            @click="stopTimer('men')"
           ></b-avatar>
           <div class="mt-4">
             {{ hours('men') }} : {{ minutes('men') | zeroPad }} :
@@ -80,8 +80,8 @@
             size="84px"
             src="@/assets/images/avatar_silent.png"
             class="avatarButton"
-            @click="startTimer('women')"
             :disabled="!inMeeting || isRunning.women || number.women === 0"
+            @click="startTimer('women')"
           ></b-avatar>
           <b-avatar
             v-else
@@ -89,8 +89,8 @@
             size="84px"
             src="@/assets/images/avatar_women.png"
             class="avatarButton"
-            @click="stopTimer('women')"
             :disabled="!inMeeting || !isRunning.women || number.women === 0"
+            @click="stopTimer('women')"
           ></b-avatar>
           <div class="mt-4">
             {{ hours('women') }} : {{ minutes('women') | zeroPad }} :
@@ -159,11 +159,11 @@
           </h2>
           <b-row class="justify-content-around my-4" style="font-size: 24px">
             <b-col class="text-center">{{
-                $t('men') + ' ' + number.men + $t('unit.people')
-              }}</b-col>
+              $t('men') + ' ' + number.men + $t('unit.people')
+            }}</b-col>
             <b-col class="text-center">{{
-                $t('women') + ' ' + number.women + $t('unit.people')
-              }}</b-col>
+              $t('women') + ' ' + number.women + $t('unit.people')
+            }}</b-col>
           </b-row>
           <b-row class="justify-content-center my-4">
             <svg id="chart" width="220" height="220">
@@ -223,111 +223,111 @@ import * as d3 from 'd3'
 import html2canvas from 'html2canvas'
 
 interface GenderNumber {
-  [key: string]: number;
-  men: number;
-  women: number;
+  [key: string]: number
+  men: number
+  women: number
 }
 
 interface GenderBoolean {
-  [key: string]: boolean;
-  men: boolean;
-  women: boolean;
+  [key: string]: boolean
+  men: boolean
+  women: boolean
 }
 
 export default Vue.extend({
+  filters: {
+    // ※ String.prototype.padStart() は IEじゃ使えない
+    zeroPad(value: number, num: number) {
+      const _num = typeof num !== 'undefined' ? num : 2
+      return value.toString().padStart(_num, '0')
+    },
+  },
   data(): {
-    meetingName: string;
-    number: GenderNumber;
-    animateFrame: GenderNumber;
-    nowTime: GenderNumber;
-    diffTime: GenderNumber;
-    startTime: GenderNumber;
-    isRunning: GenderBoolean;
-    inMeeting: boolean;
-    isDone: boolean;
-    showModal: boolean;
-    showAlert: boolean;
-    busy: boolean;
-    showCompletedModal: boolean;
+    meetingName: string
+    number: GenderNumber
+    animateFrame: GenderNumber
+    nowTime: GenderNumber
+    diffTime: GenderNumber
+    startTime: GenderNumber
+    isRunning: GenderBoolean
+    inMeeting: boolean
+    isDone: boolean
+    showModal: boolean
+    showAlert: boolean
+    busy: boolean
+    showCompletedModal: boolean
   } {
     return {
       meetingName: '',
       number: {
         men: 0,
-        women: 0
+        women: 0,
       },
       animateFrame: {
         men: 0,
-        women: 0
+        women: 0,
       },
       nowTime: {
         men: 0,
-        women: 0
+        women: 0,
       },
       diffTime: {
         men: 0,
-        women: 0
+        women: 0,
       },
       startTime: {
         men: 0,
-        women: 0
+        women: 0,
       },
       isRunning: {
         men: false,
-        women: false
+        women: false,
       },
       inMeeting: false,
       isDone: false,
       showModal: false,
       showAlert: false,
       busy: false,
-      showCompletedModal: false
+      showCompletedModal: false,
     }
   },
   computed: {
-    hours: function() {
+    hours() {
       const vm = this
-      return function(gender: string) {
+      return function (gender: string) {
         return Math.floor(vm.diffTime[gender] / 1000 / 60 / 60)
       }
     },
-    minutes: function() {
+    minutes() {
       const vm = this
-      return function(gender: string) {
+      return function (gender: string) {
         return Math.floor(vm.diffTime[gender] / 1000 / 60) % 60
       }
     },
-    seconds: function() {
+    seconds() {
       const vm = this
-      return function(gender: string) {
+      return function (gender: string) {
         return Math.floor(vm.diffTime[gender] / 1000) % 60
       }
     },
-    duration: function() {
+    duration() {
       const vm = this
-      return function(gender: string) {
+      return function (gender: string) {
         return Math.floor(vm.diffTime[gender] / 1000)
       }
-    }
-  },
-  filters: {
-    // ※ String.prototype.padStart() は IEじゃ使えない
-    zeroPad: function(value: number, num: number) {
-      const _num = typeof num !== 'undefined' ? num : 2
-      return value.toString().padStart(_num, '0')
-    }
+    },
   },
   watch: {
-    'number.men': function(newVal) {
+    'number.men'(newVal) {
       if (newVal === 0) {
         this.stopTimer('men')
       }
     },
-    'number.women': function(newVal) {
+    'number.women'(newVal) {
       if (newVal === 0) {
         this.stopTimer('women')
       }
-    }
+    },
   },
   methods: {
     setSubtractStartTime(time: number, gender: string) {
@@ -405,8 +405,8 @@ export default Vue.extend({
           duration_men: this.duration('men'),
           duration_women: this.duration('women'),
           is_done: true,
-          locale: this.$i18n.locale
-        }
+          locale: this.$i18n.locale,
+        },
       })
         .then(() => {
           this.showModal = false
@@ -415,7 +415,7 @@ export default Vue.extend({
           this.busy = false
           this.showCompletedModal = true
         })
-        .catch(e => {
+        .catch((e) => {
           console.error(e)
         })
     },
@@ -431,34 +431,31 @@ export default Vue.extend({
     drawChart() {
       const data = [
         { label: this.$t('women'), value: this.duration('women') },
-        { label: this.$t('men'), value: this.duration('men') }
+        { label: this.$t('men'), value: this.duration('men') },
       ]
 
-      const svg = d3.select('#chart'),
-        width = svg.attr('width'),
-        height = svg.attr('height'),
-        radius = Math.min(width, height) / 2,
-        g = d3
-          .select('#inner')
-          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+      const svg = d3.select('#chart')
+      const width = svg.attr('width')
+      const height = svg.attr('height')
+      const radius = Math.min(width, height) / 2
+      const g = d3
+        .select('#inner')
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
 
       const color = d3.scaleOrdinal().range(['#ff8355', '#04c4b4'])
 
       // Generate the pie
       const pie = d3
         .pie()
-        .value(function(d: any) {
+        .value(function (d: any) {
           return d.value
         })
         .sort(null)
 
       // Generate the arcs
-      const arc = d3
-        .arc()
-        .innerRadius(0)
-        .outerRadius(radius)
+      const arc = d3.arc().innerRadius(0).outerRadius(radius)
 
-      //Generate groups
+      // Generate groups
       const arcs = g
         .selectAll('arc')
         .data(pie(data))
@@ -466,22 +463,22 @@ export default Vue.extend({
         .append('g')
         .attr('class', 'arc')
 
-      //Draw arc paths
+      // Draw arc paths
       arcs
         .append('path')
-        .attr('fill', function(d: any, i: any) {
+        .attr('fill', function (_:any, i: any) {
           return color(i)
         })
         .style('stroke', '#fff')
         .style('stroke-width', 5)
         .transition()
-        .delay(function(d: any, i: any) {
+        .delay(function (_:any, i: any) {
           return i * 800
         })
         .duration(1000)
-        .attrTween('d', function(d: any) {
-          var i = d3.interpolate(d.startAngle + 0.1, d.endAngle)
-          return function(t: any) {
+        .attrTween('d', function (d: any) {
+          const i = d3.interpolate(d.startAngle + 0.1, d.endAngle)
+          return function (t: any) {
             d.endAngle = i(t)
             return arc(d)
           }
@@ -495,7 +492,7 @@ export default Vue.extend({
       arcs
         .append('text')
         .attr('fill', 'black')
-        .attr('transform', function(d: any) {
+        .attr('transform', function (d: any) {
           return 'translate(' + text.centroid(d) + ')'
         })
         .attr('dy', '5px')
@@ -512,8 +509,8 @@ export default Vue.extend({
         })
     },
     downloadImage() {
-      html2canvas(this.$refs.result as HTMLElement).then(function(canvas) {
-        canvas.toBlob(function(blob) {
+      html2canvas(this.$refs.result as HTMLElement).then(function (canvas) {
+        canvas.toBlob(function (blob) {
           const url = URL.createObjectURL(blob)
           const a = document.createElement('a')
           document.body.appendChild(a)
@@ -526,8 +523,8 @@ export default Vue.extend({
           }, 1e4)
         }, 'image/png')
       })
-    }
-  }
+    },
+  },
 })
 </script>
 
