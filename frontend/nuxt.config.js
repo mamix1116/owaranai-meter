@@ -1,16 +1,25 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'owaranai-meter',
     htmlAttrs: {
       lang: 'ja',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { property: 'og:type', content: 'website' },
+      { property: 'fb:app_id', content: '812810555941690' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:site', content: '@mamix1116' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/png', href: '/icon-192x192.png' },
+      {
+        rel: 'apple-touch-icon',
+        type: 'image/png',
+        href: '/apple-touch-icon-180x180.png',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -41,7 +50,24 @@ export default {
     'nuxt-i18n',
   ],
 
-  i18n: {},
+  bootstrapVue: {
+    icons: true,
+  },
+
+  i18n: {
+    locales: [
+      { code: 'ja', iso: 'ja-JP', file: 'ja.json' },
+      { code: 'ko', iso: 'ko-KR', file: 'ko.json' },
+    ],
+    strategy: 'prefix_except_default',
+    defaultLocale: 'ja',
+    lazy: true,
+    langDir: 'assets/i18n/',
+    vueI18n: {
+      fallbackLocale: 'ja',
+    },
+    seo: false,
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -70,6 +96,6 @@ export default {
   publicRuntimeConfig: {
     googleAnalytics: {
       id: process.env.GOOGLE_ANALYTICS_ID,
-    }
-  }
+    },
+  },
 }
