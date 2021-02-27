@@ -140,38 +140,49 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-modal v-model="showModal" centered @shown="drawChart" @close="close">
+    <b-modal
+      v-model="showModal"
+      centered
+      @shown="drawResultChart"
+      @close="close"
+    >
       <div ref="result">
-        <div class="px-2 py-2">
-          <div class="text-center">
-            <img
-              src="@/assets/images/meter_logo-horizontal.png"
-              width="300"
-              :alt="$t('title')"
-            />
-          </div>
-          <h2 class="my-4" style="font-size: 28px">
-            {{
-              meetingName === ''
-                ? $t('your_meeting')
-                : meetingName + $t('meeting_of')
-            }}
-          </h2>
-          <b-row class="justify-content-around my-4" style="font-size: 24px">
-            <b-col class="text-center">{{
-              $t('men') + ' ' + number.men + $t('unit.people')
-            }}</b-col>
-            <b-col class="text-center">{{
-              $t('women') + ' ' + number.women + $t('unit.people')
-            }}</b-col>
-          </b-row>
-          <b-row class="justify-content-center my-4">
-            <svg id="chart" width="220" height="220">
-              <g id="inner"></g>
-            </svg>
-          </b-row>
-          <div class="text-center" style="font-size: 20px">#owaranai</div>
-        </div>
+        <b-row class="px-2 py-2">
+          <b-col>
+            <div class="text-center">
+              <img
+                src="@/assets/images/meter_logo-horizontal.png"
+                width="300"
+                :alt="$t('title')"
+              />
+            </div>
+            <h2 class="text-center my-4" style="font-size: 28px">
+              {{
+                meetingName === ''
+                  ? $t('your_meeting')
+                  : meetingName + $t('meeting_of')
+              }}
+            </h2>
+            <dl>
+              <dt>
+                {{ $t('result_composition') }}
+              </dt>
+              <dd>
+                <div class="text-center">
+                  <svg id="barChart"></svg>
+                </div>
+              </dd>
+            </dl>
+            <div class="text-center" style="font-size: 20px">#owaranai</div>
+          </b-col>
+          <b-col>
+            <b-row class="justify-content-center my-4">
+              <svg id="chart" width="220" height="220">
+                <g id="inner"></g>
+              </svg>
+            </b-row>
+          </b-col>
+        </b-row>
       </div>
       <template #modal-footer>
         <b-button variant="light" @click="close">
@@ -430,6 +441,10 @@ export default Vue.extend({
       this.inMeeting = false
       this.isDone = true
     },
+    drawResultChart() {
+      this.drawChart()
+      this.drawBarChart()
+    },
     drawChart() {
       const data = [
         { label: this.$t('women'), value: this.duration('women') },
@@ -509,6 +524,85 @@ export default Vue.extend({
             this.$t('unit.seconds')
           )
         })
+    },
+    drawBarChart() {
+      const data = [
+        { label: this.$t('men'), num: this.number.men, startPos: 0 },
+        {
+          label: this.$t('women'),
+          num: this.number.women,
+          startPos: this.number.men,
+        },
+      ]
+
+      const config = {
+        margin: { top: 20, right: 0, bottom: 20, left: 0 },
+        width: 200,
+        height: 100,
+        barHeight: 50,
+      }
+      const { margin, width, height, barHeight } = config
+      const w = width - margin.left - margin.right
+      const h = height - margin.top - margin.bottom
+      const halfBarHeight = barHeight / 2
+
+      const color = d3.scaleOrdinal().range(['#04c4b4', '#ff8355'])
+
+      const total = d3.sum(data, (d: any) => d.num)
+
+      // set up scales for horizontal placement
+      const xScale = d3.scaleLinear().domain([0, total]).range([0, w])
+
+      // create svg in passed in div
+      const selection = d3
+        .select('#barChart')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+
+      // stack rect for each data value
+      selection
+        .selectAll('rect')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('class', 'rect-stacked')
+        .attr('x', (d: any) => xScale(d.startPos))
+        .attr('y', h / 2 - halfBarHeight)
+        .attr('height', barHeight)
+        .attr('width', (d: any) => xScale(d.num))
+        .attr('fill', function (_: any, i: any) {
+          return color(i)
+        })
+        .style('stroke', '#fff')
+        .style('stroke-width', 5)
+
+      // add values on bar
+      selection
+        .selectAll('.text-value')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'text-value')
+        .attr('text-anchor', 'middle')
+        .attr('x', (d: any) => xScale(d.startPos) + xScale(d.num) / 2)
+        .attr('y', h / 2 + 5)
+        .text((d: any) => d.num)
+
+      // add the labels
+      selection
+        .selectAll('.text-label')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('class', 'text-label')
+        .attr('text-anchor', 'middle')
+        .attr('x', (d: any) => xScale(d.startPos) + xScale(d.num) / 2)
+        .attr('y', h / 2 + halfBarHeight * 1.1 + 20)
+        .attr('fill', function (_: any, i: any) {
+          return color(i)
+        })
+        .text((d: any) => d.label)
     },
     downloadImage() {
       html2canvas(this.$refs.result as HTMLElement).then(function (canvas) {
