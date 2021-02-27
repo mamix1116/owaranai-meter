@@ -8,7 +8,7 @@
 import Vue from 'vue'
 import * as d3 from 'd3'
 
-interface diffTimeType {
+interface CircleChartDataType {
   label: string
   value: number
 }
@@ -17,7 +17,7 @@ export default Vue.extend({
   name: 'CircleChart',
   props: {
     data: {
-      type: Array as [diffTimeType, diffTimeType],
+      type: Array as [CircleChartDataType, CircleChartDataType],
       required: true,
     },
   },
