@@ -428,7 +428,6 @@ export default Vue.extend({
     },
     submitSave() {
       this.busy = true
-      // @ts-ignore
       this.$api({
         method: 'post',
         url: 'http://127.0.0.1:8000/api/v1/meetings/',
@@ -448,7 +447,7 @@ export default Vue.extend({
           this.busy = false
           this.showCompletedModal = true
         })
-        .catch((e: any) => {
+        .catch((e) => {
           console.error(e)
         })
     },
