@@ -6,7 +6,7 @@
     <div class="text-center">
       <a
         href="https://github.com/mamix1116/owaranai-meter"
-        rel="nofollow"
+        rel="nofollow noopener noreferrer"
         target="_blank"
       >
         <b-icon icon="github" aria-hidden="true"></b-icon> GitHub

@@ -9,7 +9,7 @@
         <div class="text-center">
           <a
             href="https://twitter.com/share?url=https://owaranai.tokyo&hashtags=owaranai&text=発言が終わらないメーター"
-            rel="nofollow"
+            rel="nofollow noopener noreferrer"
             target="_blank"
           >
             <b-icon icon="twitter" aria-hidden="true"></b-icon>
