@@ -60,6 +60,7 @@ export default {
       { code: 'ja', iso: 'ja-JP', file: 'ja.json' },
       { code: 'ko', iso: 'ko-KR', file: 'ko.json' },
       { code: 'zh-tw', iso: 'zh-TW', file: 'zh-tw.json' },
+      { code: 'en', iso: 'en-US', file: 'en.json' },
     ],
     strategy: 'prefix_except_default',
     defaultLocale: 'ja',

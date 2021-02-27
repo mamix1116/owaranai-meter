@@ -1,0 +1,38 @@
+{
+  "title": "DON'T STOP TALKING",
+  "lead": "Do women really speak too much in meeting?",
+  "lead_sub": "We measure and visualize your speaking time in meeting.",
+  "title_result": "Results of Everyone's Meeting",
+  "result_total": "Results so far",
+  "result_people": "Number of Participants",
+  "result_composition": "Gender Composition of Participants",
+  "title_meter": "We measure and visualize your speaking time in meeting.",
+  "request_for_measurement": "Press the buttons for men and women respectively when s/he start/stop speaking. You can measure the each speaking time during the meeting.",
+  "consent_to_send_to_server": "The measurement results are sent to the server to collect statistical information. The meeting name will not be sent.If you press the measurement button, you agree.",
+  "how_to_use": "How to Use",
+  "men": "Men",
+  "women": "Women",
+  "meeting_of": " meeting",
+  "alert_number": "The number of people value is invalid. Please enter a total of 1 or more, or a number from 0 to 500.",
+  "your_meeting": "Your Meeting",
+  "title_completed": "The result has been sent!",
+  "reflected_total": "It was reflected in the overall  result.",
+  "tweet": "Tweet",
+  "unit": {
+    "meeting": " Meetings",
+    "people": " People",
+    "minutes": "m",
+    "seconds": "s"
+  },
+  "button": {
+    "measure": "Measure",
+    "start_meeting": "Start the meeting",
+    "stop_meeting": "Finish the meeting",
+    "reset_meeting": "Reset",
+    "show_result_again": "See the result again",
+    "close": "CLOSE",
+    "download": "Download the image",
+    "send_data": "Send the result",
+    "go_total_result": "See the aggregation result"
+  }
+}
