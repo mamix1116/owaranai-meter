@@ -1,0 +1,38 @@
+{
+  "title": "發言管理大師計時器",
+  "lead": "在會議中，您擅長管理發言時間嗎？",
+  "lead_sub": "讓我們用計時器幫您計算會議發言時間並視覺化。",
+  "title_result": "所有人的會議總結",
+  "result_total": "目前為止的總結",
+  "result_people": "參加人數",
+  "result_composition": "參加者組成",
+  "title_meter": "讓我們用計時器幫您計算會議發言時間並視覺化。",
+  "request_for_measurement": "按下「開始」和「停止」，男女雙方都可以計算會議中的發言時間。",
+  "consent_to_send_to_server": "如果您同意「會議計時結果傳送到主機以進行統計」，請按下按鈕。（會議名稱將不會傳送）。",
+  "how_to_use": "使用方法",
+  "men": "男性",
+  "women": "女性",
+  "meeting_of": "的會議",
+  "alert_number": "人數不正確。請輸入 1 以上的數字，最多可輸入 500。",
+  "your_meeting": "您的會議",
+  "title_completed": "會議計時結果已送出！",
+  "reflected_total": "您的數據將會呈現在我們的統計結果中",
+  "tweet": "Tweet",
+  "unit": {
+    "meeting": "會議",
+    "people": "人",
+    "minutes": "分",
+    "seconds": "秒"
+  },
+  "button": {
+    "measure": "計時",
+    "start_meeting": "會議開始",
+    "stop_meeting": "會議結束",
+    "reset_meeting": "重置",
+    "show_result_again": "再看一次結果",
+    "close": "關閉",
+    "download": "圖表下載",
+    "send_data": "傳送結果",
+    "go_total_result": "查看結果"
+  }
+}

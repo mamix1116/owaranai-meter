@@ -3,7 +3,7 @@
     <b-row align-h="center">
       <b-col cols="12" md="8">
         <h1>
-          <img src="@/assets/images/meter_logo-large.png" :alt="$t('title')" />
+          <img :src="require(`@/assets/images/logo/${logoLargeSrc}`)" :alt="$t('title')" />
         </h1>
         <div class="text-center">#owaranai</div>
         <div class="text-center">
@@ -105,10 +105,20 @@ export default Vue.extend({
     }
   },
   computed: {
+    logoLargeSrc() {
+      switch (this.$i18n.locale) {
+        case 'ko':
+        case 'zh-tw':
+          return `${this.$i18n.locale}/logo-large.png`
+        default:
+          return 'logo-large.png'
+      }
+    },
     imgSrc() {
       switch (this.$i18n.locale) {
         case 'ko':
-          return 'torisetsu-ko.png'
+        case 'zh-tw':
+          return `torisetsu-${this.$i18n.locale}.png`
         default:
           return 'torisetsu.png'
       }

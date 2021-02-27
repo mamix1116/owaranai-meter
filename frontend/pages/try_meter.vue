@@ -4,7 +4,7 @@
       <h1 class="text-center">
         <nuxt-link :to="localePath('/')">
           <img
-            src="@/assets/images/meter_logo-middle.png"
+            :src="require(`@/assets/images/logo/${logoMiddleSrc}`)"
             width="550"
             :alt="$t('title')"
           />
@@ -151,7 +151,7 @@
           <b-col>
             <div class="text-center">
               <img
-                src="@/assets/images/meter_logo-horizontal.png"
+                :src="require(`@/assets/images/logo/${logoHorizontalSrc}`)"
                 width="300"
                 :alt="$t('title')"
               />
@@ -303,6 +303,24 @@ export default Vue.extend({
     }
   },
   computed: {
+    logoMiddleSrc() {
+      switch (this.$i18n.locale) {
+        case 'ko':
+        case 'zh-tw':
+          return `${this.$i18n.locale}/logo-middle.png`
+        default:
+          return 'logo-middle.png'
+      }
+    },
+    logoHorizontalSrc() {
+      switch (this.$i18n.locale) {
+        case 'ko':
+        case 'zh-tw':
+          return `${this.$i18n.locale}/logo-horizontal.png`
+        default:
+          return 'logo-horizontal.png'
+      }
+    },
     hours() {
       const vm = this
       return function (gender: string) {
