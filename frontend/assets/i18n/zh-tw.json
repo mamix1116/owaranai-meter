@@ -16,7 +16,7 @@
   "alert_number": "人數不正確。請輸入 1 以上的數字，最多可輸入 500。",
   "your_meeting": "您的會議",
   "title_completed": "會議計時結果已送出！",
-  "reflected_total": "反映在會議計時結果中",
+  "reflected_total": "您的數據將會呈現在我們的統計結果中",
   "tweet": "Tweet",
   "unit": {
     "meeting": "會議",
