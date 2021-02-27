@@ -2,13 +2,13 @@
   <div>
     <b-container>
       <h1 class="text-center">
-        <router-link :to="localePath('/')">
+        <nuxt-link :to="localePath('/')">
           <img
             src="@/assets/images/meter_logo-middle.png"
             width="550"
             :alt="$t('title')"
           />
-        </router-link>
+        </nuxt-link>
       </h1>
       <b-row align-v="center" align-h="center" class="my-4">
         <b-col cols="8" md="5">
