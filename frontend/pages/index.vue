@@ -131,7 +131,8 @@ export default Vue.extend({
   },
   methods: {
     getDataAndDrawChart() {
-      this.$axios
+      // @ts-ignore
+      this.$api
         .$get('http://127.0.0.1:8000/api/v1/meetings/')
         .then((res: Meeting[]) => {
           this.totalMeetingNum = res.length
@@ -153,7 +154,7 @@ export default Vue.extend({
           this.drawChart()
           this.drawBarChart()
         })
-        .catch((e) => {
+        .catch((e: any) => {
           console.error(e)
         })
     },
