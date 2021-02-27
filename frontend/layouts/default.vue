@@ -14,6 +14,16 @@ export default Vue.extend({
     CommonFooter,
   },
   head() {
+    const ogpImage = () => {
+      switch (this.$i18n.locale) {
+        case 'ko':
+        case 'zh-tw':
+        case 'en':
+          return `https://owaranai.tokyo/ogp-${this.$i18n.locale}.png`
+        default:
+          return 'https://owaranai.tokyo/ogp.png'
+      }
+    }
     return {
       title: this.$tc('title'),
       meta: [
@@ -40,7 +50,17 @@ export default Vue.extend({
         {
           hid: 'og:image',
           property: 'og:image',
-          content: 'https://owaranai.tokyo/ogp.png',
+          content: ogpImage(),
+        },
+        {
+          hid: 'og:image:width',
+          property: 'og:image:width',
+          content: '1200',
+        },
+        {
+          hid: 'og:image:height',
+          property: 'og:image:height',
+          content: '630',
         },
         {
           hid: 'og:url',
