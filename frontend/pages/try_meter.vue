@@ -376,6 +376,8 @@ export default Vue.extend({
       this.animateFrame.women = 0
     },
     validateMeeting() {
+      this.stopTimer('men')
+      this.stopTimer('women')
       if (
         this.number.men > 500 ||
         this.number.men < 0 ||
