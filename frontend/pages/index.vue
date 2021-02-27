@@ -109,6 +109,7 @@ export default Vue.extend({
       switch (this.$i18n.locale) {
         case 'ko':
         case 'zh-tw':
+        case 'en':
           return `${this.$i18n.locale}/logo-large.png`
         default:
           return 'logo-large.png'
@@ -118,6 +119,7 @@ export default Vue.extend({
       switch (this.$i18n.locale) {
         case 'ko':
         case 'zh-tw':
+        case 'en':
           return `torisetsu-${this.$i18n.locale}.png`
         default:
           return 'torisetsu.png'
