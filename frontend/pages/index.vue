@@ -3,7 +3,10 @@
     <b-row align-h="center">
       <b-col cols="12" md="8">
         <h1>
-          <img :src="require(`@/assets/images/logo/${logoLargeSrc}`)" :alt="$t('title')" />
+          <img
+            :src="require(`@/assets/images/logo/${logoLargeSrc}`)"
+            :alt="$t('title')"
+          />
         </h1>
         <div class="text-center">#owaranai</div>
         <div class="text-center">
@@ -131,7 +134,6 @@ export default Vue.extend({
   },
   methods: {
     getDataAndDrawChart() {
-      // @ts-ignore
       this.$api
         .$get('http://127.0.0.1:8000/api/v1/meetings/')
         .then((res: Meeting[]) => {
@@ -154,7 +156,7 @@ export default Vue.extend({
           this.drawChart()
           this.drawBarChart()
         })
-        .catch((e: any) => {
+        .catch((e) => {
           console.error(e)
         })
     },
