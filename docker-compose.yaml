@@ -1,0 +1,54 @@
+version: "3.7"
+
+services:
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - nginx
+      - app
+    links:
+      - nginx
+      - app
+    restart: always
+    environment:
+      DOMAINS: 'owaranai.tokyo -> http://nginx:80, api.owaranai.tokyo -> http://app:80'
+      STAGE: 'production'
+    volumes:
+      - ./var/lib/ssl_certs:/var/lib/https-portal
+  app:
+    image: homata/owaranai-meter_app
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:80
+    working_dir: /usr/src/app/
+    volumes:
+      - ./app:/usr/src/app
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    expose:
+      - 80
+    env_file:
+      - ./.env.production
+    depends_on:
+      - db
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - ./var/db/data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env.production
+  nginx:
+    image: homata/owaranai-meter_nginx
+    expose:
+      - 80
+    volumes:
+      - media_volume:/usr/src/app/mediafiles
+    depends_on:
+      - app
+    links:
+      - app
+
+volumes:
+  static_volume:
+  media_volume:
