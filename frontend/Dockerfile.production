@@ -6,7 +6,7 @@ COPY package*.json ./
 COPY yarn.lock ./
 RUN yarn install
 COPY . ./
-RUN yarn run build
+RUN yarn run generate --fail-on-error
 
 FROM nginx:1.19.0-alpine as production-stage
 
