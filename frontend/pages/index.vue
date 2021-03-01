@@ -135,7 +135,7 @@ export default Vue.extend({
   methods: {
     getDataAndDrawChart() {
       this.$api
-        .$get('http://127.0.0.1:8000/api/v1/meetings/')
+        .$get('/meetings/')
         .then((res: Meeting[]) => {
           this.totalMeetingNum = res.length
           this.sumDurationMen = res.reduce((prev, current) => {
