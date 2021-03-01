@@ -430,7 +430,7 @@ export default Vue.extend({
       this.busy = true
       this.$api({
         method: 'post',
-        url: 'http://127.0.0.1:8000/api/v1/meetings/',
+        url: '/meetings/',
         data: {
           num_men: this.number.men,
           num_women: this.number.women,

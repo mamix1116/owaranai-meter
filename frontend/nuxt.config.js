@@ -101,5 +101,8 @@ export default {
     googleAnalytics: {
       id: process.env.GOOGLE_ANALYTICS_ID,
     },
+    axios: {
+      baseURL: process.env.BASE_URL || 'http://127.0.0.1:8000/api/v1',
+    },
   },
 }
