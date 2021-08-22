@@ -35,24 +35,15 @@
               {{ $t('unit.people') }}
             </span>
           </b-row>
-          <b-avatar
-            v-if="!isRunning.men"
-            button
-            size="84px"
-            src="@/assets/images/avatar_silent.png"
-            class="avatarButton"
-            :disabled="!inMeeting || isRunning.men || number.men === 0"
-            @click="startTimer('men')"
-          ></b-avatar>
-          <b-avatar
-            v-else
-            button
-            size="84px"
-            src="@/assets/images/avatar_men.png"
-            class="avatarButton"
-            :disabled="!inMeeting || !isRunning.men || number.men === 0"
-            @click="stopTimer('men')"
-          ></b-avatar>
+          <avatar-button
+            avatar-img-src="images/avatar_men.png"
+            men-or-women="men"
+            :is-running="isRunning"
+            :number="number"
+            :in-meeting="inMeeting"
+            @click-start="startTimer('men')"
+            @click-stop="stopTimer('men')"
+          />
           <div class="mt-4">
             {{ hours('men') }} : {{ minutes('men') | zeroPad }} :
             {{ seconds('men') | zeroPad }}
@@ -74,24 +65,15 @@
               {{ $t('unit.people') }}
             </span>
           </b-row>
-          <b-avatar
-            v-if="!isRunning.women"
-            button
-            size="84px"
-            src="@/assets/images/avatar_silent.png"
-            class="avatarButton"
-            :disabled="!inMeeting || isRunning.women || number.women === 0"
-            @click="startTimer('women')"
-          ></b-avatar>
-          <b-avatar
-            v-else
-            button
-            size="84px"
-            src="@/assets/images/avatar_women.png"
-            class="avatarButton"
-            :disabled="!inMeeting || !isRunning.women || number.women === 0"
-            @click="stopTimer('women')"
-          ></b-avatar>
+          <avatar-button
+            avatar-img-src="images/avatar_women.png"
+            men-or-women="women"
+            :is-running="isRunning"
+            :number="number"
+            :in-meeting="inMeeting"
+            @click-start="startTimer('women')"
+            @click-stop="stopTimer('women')"
+          />
           <div class="mt-4">
             {{ hours('women') }} : {{ minutes('women') | zeroPad }} :
             {{ seconds('women') | zeroPad }}
@@ -232,6 +214,7 @@
 import Vue from 'vue'
 import * as d3 from 'd3'
 import html2canvas from 'html2canvas'
+import AvatarButton from '@/components/AvatarButton.vue'
 
 interface GenderNumber {
   [key: string]: number
@@ -246,6 +229,9 @@ interface GenderBoolean {
 }
 
 export default Vue.extend({
+  components: {
+    AvatarButton,
+  },
   filters: {
     // ※ String.prototype.padStart() は IEじゃ使えない
     zeroPad(value: number, num: number) {
@@ -642,9 +628,3 @@ export default Vue.extend({
   },
 })
 </script>
-
-<style lang="scss" scoped>
-.avatarButton {
-  @include solid-button($secondary);
-}
-</style>
